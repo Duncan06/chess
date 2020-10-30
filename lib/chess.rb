@@ -1,4 +1,5 @@
 require_relative 'knight.rb'
+require_relative 'bishop.rb'
 
 module Chess
 
@@ -34,7 +35,7 @@ module Chess
 
             possible_moves = Knight.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
@@ -42,7 +43,7 @@ module Chess
 
             possible_moves = Bishop.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
@@ -50,7 +51,7 @@ module Chess
 
             possible_moves = Rook.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
@@ -58,7 +59,7 @@ module Chess
 
             possible_moves = Queen.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
@@ -66,7 +67,7 @@ module Chess
 
             possible_moves = King.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
@@ -74,7 +75,7 @@ module Chess
 
             possible_moves = Pawn.get_moves(self, start)
 
-            possible_moves.include? last ? true : false
+            possible_moves.include?(last) ? true : false
 
         end
 
