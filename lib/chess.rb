@@ -36,7 +36,7 @@ module Chess
 
         def knight_moves(start, last)
 
-            possible_moves = Knight.get_moves(self, start)
+            possible_moves = Knight.get_moves(start)
 
             possible_moves.include?(last) ? true : false
 
@@ -44,7 +44,7 @@ module Chess
 
         def bishop_moves(start, last)
 
-            possible_moves = Bishop.get_moves(self, start)
+            possible_moves = Bishop.get_moves(start)
 
             possible_moves.include?(last) ? true : false
 
@@ -52,7 +52,7 @@ module Chess
 
         def rook_moves(start, last)
 
-            possible_moves = Rook.get_moves(self, start)
+            possible_moves = Rook.get_moves(start)
 
             possible_moves.include?(last) ? true : false
 
@@ -60,13 +60,13 @@ module Chess
 
         def queen_moves(start, last)
 
-            possible_moves = Rook.get_moves(self, start)
+            possible_moves = Rook.get_moves(start)
 
             result = possible_moves.include?(last) ? true : false
 
             if result == false
 
-                possible_moves = Bishop.get_moves(self, start)
+                possible_moves = Bishop.get_moves(start)
 
                 possible_moves.include?(last) ? true : false
 
@@ -80,15 +80,15 @@ module Chess
 
         def king_moves(start, last)
 
-            possible_moves = King.get_moves(self, start)
+            possible_moves = King.get_moves(start)
 
             possible_moves.include?(last) ? true : false
 
         end
 
-        def pawn_moves(start, last)
+        def pawn_moves(start, last, turn)
 
-            possible_moves = Pawn.get_moves(self, start, turn)
+            possible_moves = Pawn.get_moves(@board, start, turn)
 
             possible_moves.include?(last) ? true : false
 

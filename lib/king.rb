@@ -1,6 +1,6 @@
 class King
 
-    def self.get_moves(board, current_square)
+    def self.get_moves(current_square)
 
         possible_moves = []
 
