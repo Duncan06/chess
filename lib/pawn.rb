@@ -67,6 +67,8 @@ class Pawn
             end
 
         end
+        
+        possible_moves
 
     end
 
