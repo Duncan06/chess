@@ -88,7 +88,7 @@ module Chess
 
         def pawn_moves(start, last)
 
-            possible_moves = Pawn.get_moves(self, start)
+            possible_moves = Pawn.get_moves(self, start, turn)
 
             possible_moves.include?(last) ? true : false
 
