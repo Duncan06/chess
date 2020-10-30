@@ -71,6 +71,74 @@ describe Chess do
 
         end
 
+        it "identifies illegal move" do
+
+            game = Chess::Board.new
+
+            result = game.bishop_moves([0,1], [3,3])
+
+            expect(result).to eq(false)
+
+        end
+
+    end
+
+    describe "#rook_moves" do 
+
+        it "checks if move valid" do
+
+            game = Chess::Board.new
+
+            result = game.rook_moves([0,0], [1,0])
+
+            expect(result).to eq(true)
+
+        end
+
+        it "identifies illegal move" do
+
+            game = Chess::Board.new
+
+            result = game.rook_moves([0,0], [2,3])
+
+            expect(result).to eq(false)
+
+        end
+
+    end
+
+    describe "#queen_moves" do 
+
+        it "checks if move valid vertical" do
+
+            game = Chess::Board.new
+
+            result = game.queen_moves([0,0], [1,0])
+
+            expect(result).to eq(true)
+
+        end
+
+        it "checks if move valid diagonal" do
+
+            game = Chess::Board.new
+
+            result = game.queen_moves([0,3], [2,5])
+
+            expect(result).to eq(true)
+
+        end
+
+        it "identifies illegal move" do
+
+            game = Chess::Board.new
+
+            result = game.queen_moves([0,0], [2,3])
+
+            expect(result).to eq(false)
+
+        end
+
     end
 
 end

@@ -1,5 +1,6 @@
 require_relative 'knight.rb'
 require_relative 'bishop.rb'
+require_relative 'rook.rb'
 
 module Chess
 
@@ -57,9 +58,21 @@ module Chess
 
         def queen_moves(start, last)
 
-            possible_moves = Queen.get_moves(self, start)
+            possible_moves = Rook.get_moves(self, start)
 
-            possible_moves.include?(last) ? true : false
+            result = possible_moves.include?(last) ? true : false
+
+            if result == false
+
+                possible_moves = Bishop.get_moves(self, start)
+
+                possible_moves.include?(last) ? true : false
+
+            else
+
+                result
+            
+            end
 
         end
 
