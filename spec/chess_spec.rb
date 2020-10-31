@@ -27,7 +27,7 @@ describe Chess do
 
                 [0, 1] => "White Pawn", [1, 1] => "White Pawn", [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook",
+                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook"
 
             })
 
