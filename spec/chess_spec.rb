@@ -197,6 +197,30 @@ describe Chess do
 
         end
 
+        it "allows move to black piece location for white" do
+            
+            game = Chess::Board.new
+            
+            game.board[[2,2]] = "Black pawn"
+
+            result = game.pawn_moves([1,1], [2,2], 0)
+
+            expect(result).to eq(true)
+
+        end
+
+        it "allows move to white piece location for black" do
+            
+            game = Chess::Board.new
+            
+            game.board[[2,5]] = "White pawn"
+
+            result = game.pawn_moves([1,6], [2,5], 1)
+
+            expect(result).to eq(true)
+
+        end
+
     end
 
 end
