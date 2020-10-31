@@ -40,6 +40,8 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
+            check_capture_or_move(start, last, turn, valid)
+
         end
 
         def bishop_moves(start, last, turn)
@@ -47,6 +49,8 @@ module Chess
             possible_moves = Bishop.get_moves(start)
 
             valid = possible_moves.include?(last) ? true : false
+
+            check_capture_or_move(start, last, turn, valid)
 
         end
 
@@ -56,25 +60,15 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
+            check_capture_or_move(start, last, turn, valid)
+
         end
 
         def queen_moves(start, last, turn)
 
-            possible_moves = Rook.get_moves(start)
+            valid = check_queen_move(start, last)
 
-            result = possible_moves.include?(last) ? true : false
-
-            if result == false
-
-                possible_moves = Bishop.get_moves(start)
-
-                valid = possible_moves.include?(last) ? true : false
-
-            else
-
-                valid = result
-            
-            end
+            check_capture_or_move(start, last, turn, valid)
 
         end
 
@@ -84,6 +78,8 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
+            check_capture_or_move(start, last, turn, valid)
+
         end
 
         def pawn_moves(start, last, turn)
@@ -91,6 +87,8 @@ module Chess
             possible_moves = Pawn.get_moves(@board, start, turn)
 
             valid = possible_moves.include?(last) ? true : false
+
+            check_capture_or_move(start, last, turn, valid)
 
         end
 
@@ -112,19 +110,27 @@ module Chess
 
                     else
 
-                        p "Cannot move here"
+                        p "Cannot move here."
 
                     end
 
                 else
 
-                    p "#{@board[last]} captured by black"
+                    if @board[last].match(/White/)
 
-                    piece = @board[start]
+                        p "#{@board[last]} captured by black"
 
-                    @board[last] = piece
+                        piece = @board[start]
 
-                    @board[start] = nil
+                        @board[last] = piece
+
+                        @board[start] = nil
+
+                    else
+
+                        p "Cannot move here."
+
+                    end
 
                 end
 
@@ -136,6 +142,42 @@ module Chess
 
                 @board[start] = nil
 
+            end
+
+        end
+
+        def check_capture_or_move(start, last, turn, valid)
+
+            if valid == true
+
+                capture_piece?(start, last, turn)
+
+                valid
+
+            else
+
+                valid
+
+            end
+
+        end
+
+        def check_queen_move(start, last)
+
+            possible_moves = Rook.get_moves(start)
+
+            result = possible_moves.include?(last) ? true : false
+
+            if result == false
+
+                possible_moves = Bishop.get_moves(start)
+
+                valid = possible_moves.include?(last) ? true : false
+
+            else
+
+                valid = result
+            
             end
 
         end
