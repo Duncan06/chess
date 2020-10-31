@@ -13,9 +13,9 @@ describe Chess do
 
             expect(result).to eq({
 
-                [0, 7] => "Black Rook", [1, 7] => "Black Knight", [2, 7] => "Black Bishop", [3, 7] => "Black King", [4, 7] => "Black Queen", [5, 7] => "Black Bishop", [6, 7] => "Black Knight", [7, 7] => "Black Rook",
+                [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
-                [0, 6] => "Black Pawn", [1, 6] => "Black Pawn", [2, 6] => "Black Pawn", [3, 6] => "Black Pawn", [4, 6] => "Black Pawn", [5, 6] => "Black Pawn", [6, 6] => "Black Pawn", [7, 6] => "Black Pawn",
+                [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
                 [0, 5] => nil, [1,5] => nil, [2, 5] => nil, [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
 
@@ -25,9 +25,9 @@ describe Chess do
 
                 [0, 2] => nil, [1,2] => nil, [2, 2] => nil, [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
 
-                [0, 1] => "White Pawn", [1, 1] => "White Pawn", [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
+                [0, 1] => ["White Pawn", "\u2659"], [1, 1] => ["White Pawn", "\u2659"], [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook"
+                [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
             })
 
@@ -253,7 +253,7 @@ describe Chess do
 
             game = Chess::Board.new
 
-            game.board[[2, 2]] = "Black Pawn"
+            game.board[[2, 2]] = ["Black Pawn", "\u265F"]
 
             result = game.capture_piece?([1, 1], [2, 2], 0)
                 
@@ -261,9 +261,9 @@ describe Chess do
 
             expect(game.board).to eq({
 
-                [0, 7] => "Black Rook", [1, 7] => "Black Knight", [2, 7] => "Black Bishop", [3, 7] => "Black King", [4, 7] => "Black Queen", [5, 7] => "Black Bishop", [6, 7] => "Black Knight", [7, 7] => "Black Rook",
+                [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
-                [0, 6] => "Black Pawn", [1, 6] => "Black Pawn", [2, 6] => "Black Pawn", [3, 6] => "Black Pawn", [4, 6] => "Black Pawn", [5, 6] => "Black Pawn", [6, 6] => "Black Pawn", [7, 6] => "Black Pawn",
+                [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
                 [0, 5] => nil, [1,5] => nil, [2, 5] => nil, [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
 
@@ -271,11 +271,11 @@ describe Chess do
 
                 [0, 3] => nil, [1,3] => nil, [2, 3] => nil, [3, 3] => nil, [4, 3] => nil, [5, 3] => nil, [6, 3] => nil, [7, 3] => nil,
 
-                [0, 2] => nil, [1,2] => nil, [2, 2] => "White Pawn", [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
+                [0, 2] => nil, [1,2] => nil, [2, 2] => ["White Pawn", "\u2659"], [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
 
-                [0, 1] => "White Pawn", [1, 1] => nil, [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
+                [0, 1] => ["White Pawn", "\u2659"], [1, 1] => nil, [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook",
+                [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
             })
 
@@ -285,7 +285,7 @@ describe Chess do
 
             game = Chess::Board.new
 
-            game.board[[2, 5]] = "White Knight"
+            game.board[[2, 5]] = ["White Knight", "\u2658"]
 
             result = game.capture_piece?([1, 6], [2, 5], 1)
                 
@@ -293,11 +293,11 @@ describe Chess do
 
             expect(game.board).to eq({
 
-                [0, 7] => "Black Rook", [1, 7] => "Black Knight", [2, 7] => "Black Bishop", [3, 7] => "Black King", [4, 7] => "Black Queen", [5, 7] => "Black Bishop", [6, 7] => "Black Knight", [7, 7] => "Black Rook",
+                [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
-                [0, 6] => "Black Pawn", [1, 6] => nil, [2, 6] => "Black Pawn", [3, 6] => "Black Pawn", [4, 6] => "Black Pawn", [5, 6] => "Black Pawn", [6, 6] => "Black Pawn", [7, 6] => "Black Pawn",
+                [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => nil, [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
-                [0, 5] => nil, [1,5] => nil, [2, 5] => "Black Pawn", [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
+                [0, 5] => nil, [1,5] => nil, [2, 5] => ["Black Pawn", "\u265F"], [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
 
                 [0, 4] => nil, [1,4] => nil, [2, 4] => nil, [3, 4] => nil, [4, 4] => nil, [5, 4] => nil, [6, 4] => nil, [7, 4] => nil,
 
@@ -305,9 +305,9 @@ describe Chess do
 
                 [0, 2] => nil, [1,2] => nil, [2, 2] => nil, [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
 
-                [0, 1] => "White Pawn", [1, 1] => "White Pawn", [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
+                [0, 1] => ["White Pawn", "\u2659"], [1, 1] => ["White Pawn", "\u2659"], [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook",
+                [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
             })
 
@@ -317,7 +317,7 @@ describe Chess do
 
             game = Chess::Board.new
 
-            game.board[[2, 2]] = "White Pawn"
+            game.board[[2, 2]] = ["White Pawn", "\u2659"]
 
             result = game.capture_piece?([1, 1], [2, 2], 0)
                 
@@ -325,9 +325,9 @@ describe Chess do
 
             expect(game.board).to eq({
 
-                [0, 7] => "Black Rook", [1, 7] => "Black Knight", [2, 7] => "Black Bishop", [3, 7] => "Black King", [4, 7] => "Black Queen", [5, 7] => "Black Bishop", [6, 7] => "Black Knight", [7, 7] => "Black Rook",
+                [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
-                [0, 6] => "Black Pawn", [1, 6] => "Black Pawn", [2, 6] => "Black Pawn", [3, 6] => "Black Pawn", [4, 6] => "Black Pawn", [5, 6] => "Black Pawn", [6, 6] => "Black Pawn", [7, 6] => "Black Pawn",
+                [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
                 [0, 5] => nil, [1,5] => nil, [2, 5] => nil, [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
 
@@ -335,11 +335,11 @@ describe Chess do
 
                 [0, 3] => nil, [1,3] => nil, [2, 3] => nil, [3, 3] => nil, [4, 3] => nil, [5, 3] => nil, [6, 3] => nil, [7, 3] => nil,
 
-                [0, 2] => nil, [1,2] => nil, [2, 2] => "White Pawn", [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
+                [0, 2] => nil, [1,2] => nil, [2, 2] => ["White Pawn", "\u2659"], [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
 
-                [0, 1] => "White Pawn", [1, 1] => "White Pawn", [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
+                [0, 1] => ["White Pawn", "\u2659"], [1, 1] => ["White Pawn", "\u2659"], [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook",
+                [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
             })
 
@@ -349,7 +349,7 @@ describe Chess do
 
             game = Chess::Board.new
 
-            game.board[[2, 5]] = "Black Knight"
+            game.board[[2, 5]] = ["Black Knight", "\u265E"]
 
             result = game.capture_piece?([1, 6], [2, 5], 1)
                 
@@ -357,11 +357,11 @@ describe Chess do
 
             expect(game.board).to eq({
 
-                [0, 7] => "Black Rook", [1, 7] => "Black Knight", [2, 7] => "Black Bishop", [3, 7] => "Black King", [4, 7] => "Black Queen", [5, 7] => "Black Bishop", [6, 7] => "Black Knight", [7, 7] => "Black Rook",
+                [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
-                [0, 6] => "Black Pawn", [1, 6] => "Black Pawn", [2, 6] => "Black Pawn", [3, 6] => "Black Pawn", [4, 6] => "Black Pawn", [5, 6] => "Black Pawn", [6, 6] => "Black Pawn", [7, 6] => "Black Pawn",
+                [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
-                [0, 5] => nil, [1,5] => nil, [2, 5] => "Black Knight", [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
+                [0, 5] => nil, [1,5] => nil, [2, 5] => ["Black Knight", "\u265E"], [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
 
                 [0, 4] => nil, [1,4] => nil, [2, 4] => nil, [3, 4] => nil, [4, 4] => nil, [5, 4] => nil, [6, 4] => nil, [7, 4] => nil,
 
@@ -369,11 +369,23 @@ describe Chess do
 
                 [0, 2] => nil, [1,2] => nil, [2, 2] => nil, [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
 
-                [0, 1] => "White Pawn", [1, 1] => "White Pawn", [2, 1] => "White Pawn", [3, 1] => "White Pawn", [4, 1] => "White Pawn", [5, 1] => "White Pawn", [6, 1] => "White Pawn", [7, 1] => "White Pawn",
+                [0, 1] => ["White Pawn", "\u2659"], [1, 1] => ["White Pawn", "\u2659"], [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
 
-                [0, 0] => "White Rook", [1, 0] => "White Knight", [2, 0] => "White Bishop", [3, 0] => "White Queen", [4, 0] => "White King", [5, 0] => "White Bishop", [6, 0] => "White Knight", [7, 0] => "White Rook",
+                [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
             })
+
+        end
+
+        describe "#display_board" do
+
+            it "shows game board" do
+
+                game = Chess::Board.new
+
+                game.display_board
+
+            end
 
         end
 

@@ -98,9 +98,9 @@ module Chess
                 
                 if turn % 2 == 0
 
-                    if @board[last].match(/Black/)
+                    if @board[last][0].match(/Black/)
 
-                        p "#{@board[last]} captured by white"
+                        p "#{@board[last][1]} captured by white"
 
                         piece = @board[start]
 
@@ -116,9 +116,9 @@ module Chess
 
                 else
 
-                    if @board[last].match(/White/)
+                    if @board[last][0].match(/White/)
 
-                        p "#{@board[last]} captured by black"
+                        p "#{@board[last][1]} captured by black"
 
                         piece = @board[start]
 
@@ -184,114 +184,99 @@ module Chess
 
         def display_board()
 
-            a1 = @board[[0, 0]][0] == nil ? "" : @board[[0, 0]][1].encode('utf-8')
-            a2 = @board[[1, 0]][0] == nil ? "" : @board[[1, 0]][1].encode('utf-8')
-            a3 = @board[[2, 0]][0] == nil ? "" : @board[[2, 0]][1].encode('utf-8')
-            a4 = @board[[3, 0]][0] == nil ? "" : @board[[3, 0]][1].encode('utf-8')
-            a5 = @board[[4, 0]][0] == nil ? "" : @board[[4, 0]][1].encode('utf-8')
-            a6 = @board[[5, 0]][0] == nil ? "" : @board[[5, 0]][1].encode('utf-8')
-            a7 = @board[[6, 0]][0] == nil ? "" : @board[[6, 0]][1].encode('utf-8')
-            a8 = @board[[7, 0]][0] == nil ? "" : @board[[7, 0]][1].encode('utf-8')
+            a1 = @board[[0, 0]].nil? ? " " : @board[[0, 0]][1].encode('utf-8')
+            a2 = @board[[1, 0]].nil? ? " " : @board[[1, 0]][1].encode('utf-8')
+            a3 = @board[[2, 0]].nil? ? " " : @board[[2, 0]][1].encode('utf-8')
+            a4 = @board[[3, 0]].nil? ? " " : @board[[3, 0]][1].encode('utf-8')
+            a5 = @board[[4, 0]].nil? ? " " : @board[[4, 0]][1].encode('utf-8')
+            a6 = @board[[5, 0]].nil? ? " " : @board[[5, 0]][1].encode('utf-8')
+            a7 = @board[[6, 0]].nil? ? " " : @board[[6, 0]][1].encode('utf-8')
+            a8 = @board[[7, 0]].nil? ? " " : @board[[7, 0]][1].encode('utf-8')
             
-            b1 = @board[[0, 1]][0] == nil ? "" : @board[[0, 1]][1].encode('utf-8')
-            b2 = @board[[1, 1]][0] == nil ? "" : @board[[1, 1]][1].encode('utf-8')
-            b3 = @board[[2, 1]][0] == nil ? "" : @board[[2, 1]][1].encode('utf-8')
-            b4 = @board[[3, 1]][0] == nil ? "" : @board[[3, 1]][1].encode('utf-8')
-            b5 = @board[[4, 1]][0] == nil ? "" : @board[[4, 1]][1].encode('utf-8')
-            b6 = @board[[5, 1]][0] == nil ? "" : @board[[5, 1]][1].encode('utf-8')
-            b7 = @board[[6, 1]][0] == nil ? "" : @board[[6, 1]][1].encode('utf-8')
-            b8 = @board[[7, 1]][0] == nil ? "" : @board[[7, 1]][1].encode('utf-8')
+            b1 = @board[[0, 1]].nil? ? " " : @board[[0, 1]][1].encode('utf-8')
+            b2 = @board[[1, 1]].nil? ? " " : @board[[1, 1]][1].encode('utf-8')
+            b3 = @board[[2, 1]].nil? ? " " : @board[[2, 1]][1].encode('utf-8')
+            b4 = @board[[3, 1]].nil? ? " " : @board[[3, 1]][1].encode('utf-8')
+            b5 = @board[[4, 1]].nil? ? " " : @board[[4, 1]][1].encode('utf-8')
+            b6 = @board[[5, 1]].nil? ? " " : @board[[5, 1]][1].encode('utf-8')
+            b7 = @board[[6, 1]].nil? ? " " : @board[[6, 1]][1].encode('utf-8')
+            b8 = @board[[7, 1]].nil? ? " " : @board[[7, 1]][1].encode('utf-8')
 
-            c1 = @board[[0, 2]][0] == nil ? "" : @board[[0, 2]][1].encode('utf-8')
-            c2 = @board[[1, 2]][0] == nil ? "" : @board[[1, 2]][1].encode('utf-8')
-            c3 = @board[[2, 2]][0] == nil ? "" : @board[[2, 2]][1].encode('utf-8')
-            c4 = @board[[3, 2]][0] == nil ? "" : @board[[3, 2]][1].encode('utf-8')
-            c5 = @board[[4, 2]][0] == nil ? "" : @board[[4, 2]][1].encode('utf-8')
-            c6 = @board[[5, 2]][0] == nil ? "" : @board[[5, 2]][1].encode('utf-8')
-            c7 = @board[[6, 2]][0] == nil ? "" : @board[[6, 2]][1].encode('utf-8')
-            c8 = @board[[7, 2]][0] == nil ? "" : @board[[7, 2]][1].encode('utf-8')
+            c1 = @board[[0, 2]].nil? ? " " : @board[[0, 2]][1].encode('utf-8')
+            c2 = @board[[1, 2]].nil? ? " " : @board[[1, 2]][1].encode('utf-8')
+            c3 = @board[[2, 2]].nil? ? " " : @board[[2, 2]][1].encode('utf-8')
+            c4 = @board[[3, 2]].nil? ? " " : @board[[3, 2]][1].encode('utf-8')
+            c5 = @board[[4, 2]].nil? ? " " : @board[[4, 2]][1].encode('utf-8')
+            c6 = @board[[5, 2]].nil? ? " " : @board[[5, 2]][1].encode('utf-8')
+            c7 = @board[[6, 2]].nil? ? " " : @board[[6, 2]][1].encode('utf-8')
+            c8 = @board[[7, 2]].nil? ? " " : @board[[7, 2]][1].encode('utf-8')
 
-            d1 = @board[[0, 3]][0] == nil ? "" : @board[[0, 3]][1].encode('utf-8')
-            d2 = @board[[1, 3]][0] == nil ? "" : @board[[1, 3]][1].encode('utf-8')
-            d3 = @board[[2, 3]][0] == nil ? "" : @board[[2, 3]][1].encode('utf-8')
-            d4 = @board[[3, 3]][0] == nil ? "" : @board[[3, 3]][1].encode('utf-8')
-            d5 = @board[[4, 3]][0] == nil ? "" : @board[[4, 3]][1].encode('utf-8')
-            d6 = @board[[5, 3]][0] == nil ? "" : @board[[5, 3]][1].encode('utf-8')
-            d7 = @board[[6, 3]][0] == nil ? "" : @board[[6, 3]][1].encode('utf-8')
-            d8 = @board[[7, 3]][0] == nil ? "" : @board[[7, 3]][1].encode('utf-8')
+            d1 = @board[[0, 3]].nil? ? " " : @board[[0, 3]][1].encode('utf-8')
+            d2 = @board[[1, 3]].nil? ? " " : @board[[1, 3]][1].encode('utf-8')
+            d3 = @board[[2, 3]].nil? ? " " : @board[[2, 3]][1].encode('utf-8')
+            d4 = @board[[3, 3]].nil? ? " " : @board[[3, 3]][1].encode('utf-8')
+            d5 = @board[[4, 3]].nil? ? " " : @board[[4, 3]][1].encode('utf-8')
+            d6 = @board[[5, 3]].nil? ? " " : @board[[5, 3]][1].encode('utf-8')
+            d7 = @board[[6, 3]].nil? ? " " : @board[[6, 3]][1].encode('utf-8')
+            d8 = @board[[7, 3]].nil? ? " " : @board[[7, 3]][1].encode('utf-8')
 
-            e1 = @board[[0, 4]][0] == nil ? "" : @board[[0, 4]][1].encode('utf-8')
-            e2 = @board[[1, 4]][0] == nil ? "" : @board[[1, 4]][1].encode('utf-8')
-            e3 = @board[[2, 4]][0] == nil ? "" : @board[[2, 4]][1].encode('utf-8')
-            e4 = @board[[3, 4]][0] == nil ? "" : @board[[3, 4]][1].encode('utf-8')
-            e5 = @board[[4, 4]][0] == nil ? "" : @board[[4, 4]][1].encode('utf-8')
-            e6 = @board[[5, 4]][0] == nil ? "" : @board[[5, 4]][1].encode('utf-8')
-            e7 = @board[[6, 4]][0] == nil ? "" : @board[[6, 4]][1].encode('utf-8')
-            e8 = @board[[7, 4]][0] == nil ? "" : @board[[7, 4]][1].encode('utf-8')
+            e1 = @board[[0, 4]].nil? ? " " : @board[[0, 4]][1].encode('utf-8')
+            e2 = @board[[1, 4]].nil? ? " " : @board[[1, 4]][1].encode('utf-8')
+            e3 = @board[[2, 4]].nil? ? " " : @board[[2, 4]][1].encode('utf-8')
+            e4 = @board[[3, 4]].nil? ? " " : @board[[3, 4]][1].encode('utf-8')
+            e5 = @board[[4, 4]].nil? ? " " : @board[[4, 4]][1].encode('utf-8')
+            e6 = @board[[5, 4]].nil? ? " " : @board[[5, 4]][1].encode('utf-8')
+            e7 = @board[[6, 4]].nil? ? " " : @board[[6, 4]][1].encode('utf-8')
+            e8 = @board[[7, 4]].nil? ? " " : @board[[7, 4]][1].encode('utf-8')
 
-            f1 = @board[[0, 5]][0] == nil ? "" : @board[[0, 5]][1].encode('utf-8')
-            f2 = @board[[1, 5]][0] == nil ? "" : @board[[1, 5]][1].encode('utf-8')
-            f3 = @board[[2, 5]][0] == nil ? "" : @board[[2, 5]][1].encode('utf-8')
-            f4 = @board[[3, 5]][0] == nil ? "" : @board[[3, 5]][1].encode('utf-8')
-            f5 = @board[[4, 5]][0] == nil ? "" : @board[[4, 5]][1].encode('utf-8')
-            f6 = @board[[5, 5]][0] == nil ? "" : @board[[5, 5]][1].encode('utf-8')
-            f7 = @board[[6, 5]][0] == nil ? "" : @board[[6, 5]][1].encode('utf-8')
-            f8 = @board[[7, 5]][0] == nil ? "" : @board[[7, 5]][1].encode('utf-8')
+            f1 = @board[[0, 5]].nil? ? " " : @board[[0, 5]][1].encode('utf-8')
+            f2 = @board[[1, 5]].nil? ? " " : @board[[1, 5]][1].encode('utf-8')
+            f3 = @board[[2, 5]].nil? ? " " : @board[[2, 5]][1].encode('utf-8')
+            f4 = @board[[3, 5]].nil? ? " " : @board[[3, 5]][1].encode('utf-8')
+            f5 = @board[[4, 5]].nil? ? " " : @board[[4, 5]][1].encode('utf-8')
+            f6 = @board[[5, 5]].nil? ? " " : @board[[5, 5]][1].encode('utf-8')
+            f7 = @board[[6, 5]].nil? ? " " : @board[[6, 5]][1].encode('utf-8')
+            f8 = @board[[7, 5]].nil? ? " " : @board[[7, 5]][1].encode('utf-8')
 
-            g1 = @board[[0, 6]][0] == nil ? "" : @board[[0, 6]][1].encode('utf-8')
-            g2 = @board[[1, 6]][0] == nil ? "" : @board[[1, 6]][1].encode('utf-8')
-            g3 = @board[[2, 6]][0] == nil ? "" : @board[[2, 6]][1].encode('utf-8')
-            g4 = @board[[3, 6]][0] == nil ? "" : @board[[3, 6]][1].encode('utf-8')
-            g5 = @board[[4, 6]][0] == nil ? "" : @board[[4, 6]][1].encode('utf-8')
-            g6 = @board[[5, 6]][0] == nil ? "" : @board[[5, 6]][1].encode('utf-8')
-            g7 = @board[[6, 6]][0] == nil ? "" : @board[[6, 6]][1].encode('utf-8')
-            g8 = @board[[7, 6]][0] == nil ? "" : @board[[7, 6]][1].encode('utf-8')
+            g1 = @board[[0, 6]].nil? ? " " : @board[[0, 6]][1].encode('utf-8')
+            g2 = @board[[1, 6]].nil? ? " " : @board[[1, 6]][1].encode('utf-8')
+            g3 = @board[[2, 6]].nil? ? " " : @board[[2, 6]][1].encode('utf-8')
+            g4 = @board[[3, 6]].nil? ? " " : @board[[3, 6]][1].encode('utf-8')
+            g5 = @board[[4, 6]].nil? ? " " : @board[[4, 6]][1].encode('utf-8')
+            g6 = @board[[5, 6]].nil? ? " " : @board[[5, 6]][1].encode('utf-8')
+            g7 = @board[[6, 6]].nil? ? " " : @board[[6, 6]][1].encode('utf-8')
+            g8 = @board[[7, 6]].nil? ? " " : @board[[7, 6]][1].encode('utf-8')
 
-            h1 = @board[[0, 7]][0] == nil ? "" : @board[[0, 7]][1].encode('utf-8')
-            h2 = @board[[1, 7]][0] == nil ? "" : @board[[1, 7]][1].encode('utf-8')
-            h3 = @board[[2, 7]][0] == nil ? "" : @board[[2, 7]][1].encode('utf-8')
-            h4 = @board[[3, 7]][0] == nil ? "" : @board[[3, 7]][1].encode('utf-8')
-            h5 = @board[[4, 7]][0] == nil ? "" : @board[[4, 7]][1].encode('utf-8')
-            h6 = @board[[5, 7]][0] == nil ? "" : @board[[5, 7]][1].encode('utf-8')
-            h7 = @board[[6, 7]][0] == nil ? "" : @board[[6, 7]][1].encode('utf-8')
-            h8 = @board[[7, 7]][0] == nil ? "" : @board[[7, 7]][1].encode('utf-8')
+            h1 = @board[[0, 7]].nil? ? " " : @board[[0, 7]][1].encode('utf-8')
+            h2 = @board[[1, 7]].nil? ? " " : @board[[1, 7]][1].encode('utf-8')
+            h3 = @board[[2, 7]].nil? ? " " : @board[[2, 7]][1].encode('utf-8')
+            h4 = @board[[3, 7]].nil? ? " " : @board[[3, 7]][1].encode('utf-8')
+            h5 = @board[[4, 7]].nil? ? " " : @board[[4, 7]][1].encode('utf-8')
+            h6 = @board[[5, 7]].nil? ? " " : @board[[5, 7]][1].encode('utf-8')
+            h7 = @board[[6, 7]].nil? ? " " : @board[[6, 7]][1].encode('utf-8')
+            h8 = @board[[7, 7]].nil? ? " " : @board[[7, 7]][1].encode('utf-8')
             
             puts "
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{h1} | #{h2} | #{h3} | #{h4} | #{h5} | #{h6} | #{h7} | #{h8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{g1} | #{g2} | #{g3} | #{g4} | #{g5} | #{g6} | #{g7} | #{g8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{f1} | #{f2} | #{f3} | #{f4} | #{f5} | #{f6} | #{f7} | #{f8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{e1} | #{e2} | #{e3} | #{e4} | #{e5} | #{e6} | #{e7} | #{e8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{d1} | #{d2} | #{d3} | #{d4} | #{d5} | #{d6} | #{d7} | #{d8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{c1} | #{c2} | #{c3} | #{c4} | #{c5} | #{c6} | #{c7} | #{c8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{b1} | #{b2} | #{b3} | #{b4} | #{b5} | #{b6} | #{b7} | #{b8} |
-                |       |       |       |       |       |       |       |       |
-                _________________________________________________________________
-                |       |       |       |       |       |       |       |       |
+                _________________________________
                 | #{a1} | #{a2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
-                |       |       |       |       |       |       |       |       |
-                -----------------------------------------------------------------
+                ---------------------------------
             
             "
+        end
 
     end
 
