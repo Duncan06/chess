@@ -34,31 +34,31 @@ module Chess
 
         end
 
-        def knight_moves(start, last)
+        def knight_moves(start, last, turn)
 
             possible_moves = Knight.get_moves(start)
 
-            possible_moves.include?(last) ? true : false
+            valid = possible_moves.include?(last) ? true : false
 
         end
 
-        def bishop_moves(start, last)
+        def bishop_moves(start, last, turn)
 
             possible_moves = Bishop.get_moves(start)
 
-            possible_moves.include?(last) ? true : false
+            valid = possible_moves.include?(last) ? true : false
 
         end
 
-        def rook_moves(start, last)
+        def rook_moves(start, last, turn)
 
             possible_moves = Rook.get_moves(start)
 
-            possible_moves.include?(last) ? true : false
+            valid = possible_moves.include?(last) ? true : false
 
         end
 
-        def queen_moves(start, last)
+        def queen_moves(start, last, turn)
 
             possible_moves = Rook.get_moves(start)
 
@@ -68,21 +68,21 @@ module Chess
 
                 possible_moves = Bishop.get_moves(start)
 
-                possible_moves.include?(last) ? true : false
+                valid = possible_moves.include?(last) ? true : false
 
             else
 
-                result
+                valid = result
             
             end
 
         end
 
-        def king_moves(start, last)
+        def king_moves(start, last, turn)
 
             possible_moves = King.get_moves(start)
 
-            possible_moves.include?(last) ? true : false
+            valid = possible_moves.include?(last) ? true : false
 
         end
 
@@ -90,7 +90,53 @@ module Chess
 
             possible_moves = Pawn.get_moves(@board, start, turn)
 
-            possible_moves.include?(last) ? true : false
+            valid = possible_moves.include?(last) ? true : false
+
+        end
+
+        def capture_piece?(start, last, turn)
+
+            if @board[last] != nil
+                
+                if turn % 2 == 0
+
+                    if @board[last].match(/Black/)
+
+                        p "#{@board[last]} captured by white"
+
+                        piece = @board[start]
+
+                        @board[last] = piece
+
+                        @board[start] = nil
+
+                    else
+
+                        p "Cannot move here"
+
+                    end
+
+                else
+
+                    p "#{@board[last]} captured by black"
+
+                    piece = @board[start]
+
+                    @board[last] = piece
+
+                    @board[start] = nil
+
+                end
+
+            else
+
+                piece = @board[start]
+
+                @board[last] = piece
+
+                @board[start] = nil
+
+            end
 
         end
 
