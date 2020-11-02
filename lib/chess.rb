@@ -100,7 +100,7 @@ module Chess
 
                     if @board[last][0].match(/Black/)
 
-                        p "#{@board[last][1]} captured by white"
+                        p "#{@board[last][1]} #{board[last][0]} captured by white"
 
                         piece = @board[start]
 
@@ -118,7 +118,7 @@ module Chess
 
                     if @board[last][0].match(/White/)
 
-                        p "#{@board[last][1]} captured by black"
+                        p "#{@board[last][1]} #{board[last][0]} captured by black"
 
                         piece = @board[start]
 
