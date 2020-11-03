@@ -447,6 +447,8 @@ describe Chess do
 
                 game = Chess::Board.new
 
+                game.display_board
+
                 result = game.player_move(0)
 
                 expect { print "It is your turn White"}.to output.to_stdout
@@ -454,6 +456,8 @@ describe Chess do
                 expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
 
                 gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
 
                 gets
 
@@ -475,11 +479,65 @@ describe Chess do
 
                     [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
-                })
+                }) 
+
+                game.display_board()
 
                 $stdin = STDIN
 
             end
+
+            # it "Does not allow illegal move with piece" do
+
+            #     io = StringIO.new
+
+            #     io.puts "b2"
+
+            #     io.puts "c3"
+
+            #     io.rewind
+
+            #     $stdin = io
+
+            #     game = Chess::Board.new
+
+            #     result = game.player_move(0)
+
+            #     expect { print "It is your turn White"}.to output.to_stdout
+
+            #     expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+            #     gets
+
+            #     gets
+
+            #     game.display_board()
+
+            #     expect(game.board).to eq({
+                    
+            #         [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
+
+            #         [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
+
+            #         [0, 5] => nil, [1,5] => nil, [2, 5] => nil, [3, 5] => nil, [4, 5] => nil, [5, 5] => nil, [6, 5] => nil, [7, 5] => nil,
+
+            #         [0, 4] => nil, [1,4] => nil, [2, 4] => nil, [3, 4] => nil, [4, 4] => nil, [5, 4] => nil, [6, 4] => nil, [7, 4] => nil,
+
+            #         [0, 3] => nil, [1,3] => nil, [2, 3] => nil, [3, 3] => nil, [4, 3] => nil, [5, 3] => nil, [6, 3] => nil, [7, 3] => nil,
+
+            #         [0, 2] => nil, [1,2] => nil, [2, 2] => nil, [3, 2] => nil, [4, 2] => nil, [5, 2] => nil, [6, 2] => nil, [7, 2] => nil,
+
+            #         [0, 1] => ["White Pawn", "\u2659"], [1, 1] => ["White Pawn", "\u2659"], [2, 1] => ["White Pawn", "\u2659"], [3, 1] => ["White Pawn", "\u2659"], [4, 1] => ["White Pawn", "\u2659"], [5, 1] => ["White Pawn", "\u2659"], [6, 1] => ["White Pawn", "\u2659"], [7, 1] => ["White Pawn", "\u2659"],
+
+            #         [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
+
+            #     })
+
+            #     game.display_board()
+
+            #     $stdin = STDIN
+
+            # end
 
         end
 

@@ -136,7 +136,7 @@ module Chess
 
             current_player = turn % 2
 
-            current_player == 0 ? "White" : "Black"
+            current_player = (current_player == 0) ? "White" : "Black"
 
             puts "It is your turn #{current_player}"
 
@@ -148,7 +148,11 @@ module Chess
 
             last = player_select()
 
-            if check_move_type(start, last, turn)
+            legal = check_move_type(start, last, turn)
+
+            p legal
+
+            if legal != false
 
                 capture_piece?(start, last, turn)
 
@@ -156,7 +160,7 @@ module Chess
 
                 "This piece cannot move there."
 
-                player_move()
+                player_move(turn)
 
             end
 
@@ -203,6 +207,8 @@ module Chess
         def capture_piece?(start, last, turn)
 
             if @board[last] != nil
+
+                p "This is move square #{@board[last]}"
                 
                 if turn % 2 == 0
 
