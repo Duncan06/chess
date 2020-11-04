@@ -18,7 +18,7 @@ class Pawn
 
             if board[[x+1, y+1]] != nil
 
-                if board[[x+1, y+1]].match(/Black/)
+                if board[[x+1, y+1]][0].match(/Black/)
 
                     possible_moves << [x+1, y+1]
 
@@ -28,7 +28,7 @@ class Pawn
 
             if board[[x-1, y+1]] != nil
 
-                if board[[x-1, y+1]].match(/Black/)
+                if board[[x-1, y+1]][0].match(/Black/)
 
                     possible_moves << [x-1, y+1]
 
@@ -48,7 +48,7 @@ class Pawn
 
             if board[[x+1, y-1]] != nil
 
-                if board[[x+1, y-1]].match(/White/)
+                if board[[x+1, y-1]][0].match(/White/)
 
                     possible_moves << [x+1, y-1]
 
@@ -58,7 +58,7 @@ class Pawn
 
             if board[[x-1, y-1]] != nil
 
-                if board[[x-1, y-1]].match(/White/)
+                if board[[x-1, y-1]][0].match(/White/)
 
                     possible_moves << [x-1, y-1]
 

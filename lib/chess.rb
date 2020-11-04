@@ -114,7 +114,13 @@ module Chess
 
         def player_select()
 
-            answer = gets.chomp
+            answer = (gets.chomp) rescue nil
+
+            if answer == nil
+
+                return false
+
+            end
 
             answer = answer.downcase
 
@@ -144,13 +150,27 @@ module Chess
 
             start = player_select()
 
+            if start == false
+
+                p "Exited selection"
+
+                player_move(turn)
+
+            end
+
             puts "where would you like to move to?"
 
             last = player_select()
 
-            legal = check_move_type(start, last, turn)
+            if last == false
 
-            p legal
+                p "Exited selection"
+
+                player_move(turn)
+
+            end
+
+            legal = check_move_type(start, last, turn)
 
             if legal != false
 
@@ -207,8 +227,6 @@ module Chess
         def capture_piece?(start, last, turn)
 
             if @board[last] != nil
-
-                p "This is move square #{@board[last]}"
                 
                 if turn % 2 == 0
 
@@ -260,11 +278,49 @@ module Chess
 
         end
 
+        def screen_capture_piece?(start, last, turn)
+
+            if @board[last] != nil
+                
+                if turn % 2 == 0
+
+                    if @board[last][0].match(/Black/)
+
+                        true
+
+                    else
+
+                        p "Cannot move here."
+
+                    end
+
+                else
+
+                    if @board[last][0].match(/White/)
+
+                        true
+
+                    else
+
+                        p "Cannot move here."
+
+                    end
+
+                end
+
+            else
+
+                true
+
+            end
+
+        end
+
         def check_capture_or_move(start, last, turn, valid)
 
             if valid == true
 
-                capture_piece?(start, last, turn)
+                screen_capture_piece?(start, last, turn)
 
                 valid
 
