@@ -8,7 +8,7 @@ module Chess
 
     class Board
 
-        attr_accessor :board, :spots
+        attr_accessor :board, :spots, :black_king, :white_king, :black_check, :white_check
 
         def initialize
 
@@ -51,6 +51,14 @@ module Chess
                         "h1" => [0, 7], "h2" => [1, 7], "h3" => [2, 7], "h4" => [3, 7], "h5" => [4, 7], "h6" => [5, 7], "h7" => [6, 7], "h8" => [7, 7]
 
                     }
+
+            @black_king = [3,7]
+
+            @white_king = [4,0]
+
+            @black_check = false
+
+            @white_check = false
 
         end
 
@@ -176,6 +184,8 @@ module Chess
 
                 capture_piece?(start, last, turn)
 
+                check(turn)
+
             else
 
                 "This piece cannot move there."
@@ -230,6 +240,12 @@ module Chess
                 
                 if turn % 2 == 0
 
+                    if start[0] == "White King"
+
+                        @white_king = last
+
+                    end
+
                     if @board[last][0].match(/Black/)
 
                         p "#{@board[last][1]} #{board[last][0]} captured by white"
@@ -250,6 +266,12 @@ module Chess
 
                     if @board[last][0].match(/White/)
 
+                        if start[0] == "Black King"
+
+                            @black_king = last
+
+                        end
+
                         p "#{@board[last][1]} #{board[last][0]} captured by black"
 
                         piece = @board[start]
@@ -267,6 +289,12 @@ module Chess
                 end
 
             else
+
+                if start[0] == "White King" || "Black King"
+
+                    start[0] == "White King" ? @white_king = last : @black_king = last
+
+                end
 
                 piece = @board[start]
 
@@ -348,6 +376,34 @@ module Chess
 
                 valid = result
             
+            end
+
+        end
+
+        def check(turn)
+
+            if turn % 2 == 0
+
+                if check_move_type(last, @black_king, turn)
+
+                    p "Black King is in Check"
+
+                    @black_check = true
+
+                end
+
+            else
+
+                p "Move for black #{check_move_type(last, @white_king, turn)}, white king #{@white_king}, last #{last}"
+
+                if check_move_type(last, [4,0], turn)
+
+                    p "White King is in Check"
+
+                    @white_check = true
+
+                end
+
             end
 
         end

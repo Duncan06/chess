@@ -581,6 +581,28 @@ describe Chess do
 
         end
 
+        describe "#check" do
+
+            it "decides if piece is in check" do
+
+                game = Chess::Board.new
+
+                game.board[[4,1]] = nil
+
+                game.board[[4,3]] = ["Black Queen", "\u265B"]
+
+                result = game.capture_piece?([4,3], [4,2], 1)
+
+                game.display_board
+
+                result = game.check([4,2], 1)
+
+                expect(game.white_check).to eq(true)
+
+            end
+
+        end
+
         describe "#display_board" do
 
             it "shows game board" do
