@@ -447,8 +447,6 @@ describe Chess do
 
                 game = Chess::Board.new
 
-                game.display_board
-
                 result = game.player_move(0)
 
                 expect { print "It is your turn White"}.to output.to_stdout
@@ -460,8 +458,6 @@ describe Chess do
                 expect { print "where would you like to move to?" }.to output.to_stdout
 
                 gets
-
-                game.display_board()
 
                 expect(game.board).to eq({
                     
@@ -537,8 +533,6 @@ describe Chess do
 
                 game.board[[2,2]] = ["Black Knight", "\u265E"]
 
-                game.display_board
-
                 result = game.player_move(0)
 
                 expect { print "It is your turn White"}.to output.to_stdout
@@ -552,8 +546,6 @@ describe Chess do
                 gets
 
                 expect { print "Black Knight captured by white." }.to output.to_stdout
-
-                game.display_board()
 
                 expect(game.board).to eq({
                     

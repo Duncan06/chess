@@ -394,11 +394,15 @@ module Chess
 
                         if @board[[first, second]] != nil
 
-                            legal = check_move_type([first, second], @black_king, turn)
+                            if @board[[first, second]][0].match(/White/)
 
-                            if legal
+                                legal = check_move_type([first, second], @black_king, turn)
 
-                                @black_check = true
+                                if legal
+
+                                    @black_check = true
+
+                                end
 
                             end
 
@@ -422,18 +426,20 @@ module Chess
 
                     while second < 8
 
-                        p @board[[first, second]]
-
                         if @board[[first, second]] != nil
 
-                            legal = check_move_type([first, second], @black_king, turn)
+                            if @board[[first, second]][0].match(/Black/)
 
-                            if legal
+                                legal = check_move_type([first, second], @white_king, turn)
 
-                                @white_check = true
+                                if legal
+
+                                    @white_check = true
+
+                                end
 
                             end
-
+                        
                         end
 
                         second += 1
