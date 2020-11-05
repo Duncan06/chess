@@ -212,7 +212,7 @@ module Chess
 
             when "White Rook" || "Black Rook"
 
-                rook_moves(start, last, trun)
+                rook_moves(start, last, turn)
 
             when "White King" || "Black King"
 
@@ -384,23 +384,65 @@ module Chess
 
             if turn % 2 == 0
 
-                if check_move_type(last, @black_king, turn)
+                first = 0
 
-                    p "Black King is in Check"
+                second = 0
 
-                    @black_check = true
+                while first < 8
+
+                    while second < 8
+
+                        if @board[[first, second]] != nil
+
+                            legal = check_move_type([first, second], @black_king, turn)
+
+                            if legal
+
+                                @black_check = true
+
+                            end
+
+                        end
+
+                        second += 1
+
+                    end
+
+                    first += 1
 
                 end
 
             else
 
-                p "Move for black #{check_move_type(last, @white_king, turn)}, white king #{@white_king}, last #{last}"
+                first = 0
 
-                if check_move_type(last, [4,0], turn)
+                second = 0
 
-                    p "White King is in Check"
+                while first < 8
 
-                    @white_check = true
+                    while second < 8
+
+                        p @board[[first, second]]
+
+                        if @board[[first, second]] != nil
+
+                            legal = check_move_type([first, second], @black_king, turn)
+
+                            if legal
+
+                                @white_check = true
+
+                            end
+
+                        end
+
+                        second += 1
+
+                    end
+
+                    first += 1
+
+                    second = 0
 
                 end
 

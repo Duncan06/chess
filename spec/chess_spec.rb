@@ -595,7 +595,7 @@ describe Chess do
 
                 game.display_board
 
-                result = game.check([4,2], 1)
+                result = game.check(1)
 
                 expect(game.white_check).to eq(true)
 
