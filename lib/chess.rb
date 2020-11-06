@@ -100,6 +100,26 @@ module Chess
 
         end
 
+        def check_queen_move(start, last)
+
+            possible_moves = Rook.get_moves(start)
+
+            result = possible_moves.include?(last) ? true : false
+
+            if result == false
+
+                possible_moves = Bishop.get_moves(start)
+
+                valid = possible_moves.include?(last) ? true : false
+
+            else
+
+                valid = result
+            
+            end
+
+        end
+
         def king_moves(start, last, turn)
 
             possible_moves = King.get_moves(start)
@@ -360,26 +380,6 @@ module Chess
 
         end
 
-        def check_queen_move(start, last)
-
-            possible_moves = Rook.get_moves(start)
-
-            result = possible_moves.include?(last) ? true : false
-
-            if result == false
-
-                possible_moves = Bishop.get_moves(start)
-
-                valid = possible_moves.include?(last) ? true : false
-
-            else
-
-                valid = result
-            
-            end
-
-        end
-
         def check(turn)
 
             if turn % 2 == 0
@@ -451,6 +451,10 @@ module Chess
                     second = 0
 
                 end
+
+                test = check_move_type([4,2], @white_king, turn)
+
+                p test, @board[[4,2]]
 
             end
 
