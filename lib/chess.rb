@@ -182,6 +182,10 @@ module Chess
 
                     p "Black wins! Checkmate."
 
+                else 
+
+                    p "White is in check."
+
                 end
 
             elsif @black_check == true 
@@ -191,6 +195,10 @@ module Chess
                 if !possible
 
                     p "White wins! Checkmate."
+
+                else
+
+                    p "Black is in check."
 
                 end
 
@@ -488,9 +496,21 @@ module Chess
 
             possible_moves = King.get_moves(king)
 
-            safe << possible_moves.each{|x| check(x, color, turn)}
+            possible_moves.each do |square| 
+                
+                if check(square, color, turn) == false
+
+                    safe << square
+
+                end
+
+            end 
+
+            p safe
 
             king_moves_out = safe.include? true ? true : false
+
+            p king_moves_out
 
             if !king_moves_out
 
@@ -507,8 +527,12 @@ module Chess
                             if @board[[first, second]][0].match(color)
 
                                 checking.each do |square| 
+
+                                    p "this is square #{square}"
                                     
                                     can_take = check_move_type([first, second], square, turn)
+
+                                    p can_take, @board[[first, second]]
 
                                     if can_take == true
 

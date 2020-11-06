@@ -583,13 +583,35 @@ describe Chess do
 
                 game.board[[4,3]] = ["Black Queen", "\u265B"]
 
-                result = game.capture_piece?([4,3], [4,2], 1)
+                game.capture_piece?([4,3], [4,2], 1)
 
                 game.display_board
 
-                result = game.check(game.white_king, /Black/, 1)
+                game.check(game.white_king, /Black/, 1)
 
                 expect(game.white_check).to eq(true)
+
+            end
+
+        end
+
+        describe "#get_out_of_check" do
+
+            it "decides if there is a way to block check" do
+
+                game = Chess::Board.new
+
+                game.board[[4,1]] = nil
+
+                game.board[[4,3]] = ["Black Queen", "\u265B"]
+
+                game.capture_piece?([4,3], [4,2], 1)
+
+                result = game.get_out_of_check(game.white_king, /White/, 0, [[4,2]])
+
+                game.display_board
+
+                expect(result).to eq(true)
 
             end
 
