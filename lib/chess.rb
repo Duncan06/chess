@@ -408,75 +408,51 @@ module Chess
 
         def check(turn)
 
+            first = 0
+
+            second = 0
+
             if turn % 2 == 0
 
-                first = 0
+                color = /White/
 
-                second = 0
+                king = @black_king
 
-                while first < 8
+            else 
 
-                    while second < 8
+                color = /Black/
 
-                        if @board[[first, second]] != nil
+                king = @white_king
 
-                            if @board[[first, second]][0].match(/White/)
+            end
 
-                                legal = check_move_type([first, second], @black_king, turn)
+            while first < 8
 
-                                if legal
+                while second < 8
 
-                                    @black_check = true
+                    if @board[[first, second]] != nil
 
-                                end
+                        if @board[[first, second]][0].match(color)
+
+                            legal = check_move_type([first, second], king, turn)
+
+                            if legal
+
+                                turn % 2 == 0 ? @black_check = true : @white_check = true
 
                             end
 
                         end
 
-                        second += 1
-
                     end
 
-                    first += 1
+                    second += 1
 
                 end
 
-            else
-
-                first = 0
+                first += 1
 
                 second = 0
-
-                while first < 8
-
-                    while second < 8
-
-                        if @board[[first, second]] != nil
-
-                            if @board[[first, second]][0].match(/Black/)
-
-                                legal = check_move_type([first, second], @white_king, turn)
-
-                                if legal
-
-                                    @white_check = true
-
-                                end
-
-                            end
-                        
-                        end
-
-                        second += 1
-
-                    end
-
-                    first += 1
-
-                    second = 0
-
-                end
 
             end
 
