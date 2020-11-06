@@ -464,8 +464,6 @@ module Chess
 
                                 turn % 2 == 0 ? @white_checking_black << [first, second]: @black_checking_white << [first, second]
 
-                                p @black_checking_white
-
                             end
 
                         end
@@ -520,6 +518,14 @@ module Chess
 
                                         copy[square] = piece
 
+                                        safety = recheck(king, color, turn, copy)
+
+                                        if safety == true
+
+                                            return true
+
+                                        end
+
                                     end
 
                                 end
@@ -537,6 +543,66 @@ module Chess
                     second = 0
 
                 end
+
+            end
+
+            false
+
+        end
+
+        def recheck(king, color, turn, board)
+
+            first = 0
+
+            second = 0
+
+            black_check = nil
+
+            white_check = nil
+
+            white_checking_black = []
+
+            black_checking_white = []
+
+            while first < 8
+
+                while second < 8
+
+                    if board[[first, second]] != nil
+
+                        if board[[first, second]][0].match(color)
+
+                            legal = check_move_type([first, second], king, turn)
+
+                            if legal
+
+                                turn % 2 == 0 ? black_check = true : white_check = true
+
+                                turn % 2 == 0 ? white_checking_black << [first, second]: black_checking_white << [first, second]
+
+                            end
+
+                        end
+
+                    end
+
+                    second += 1
+
+                end
+
+                first += 1
+
+                second = 0
+
+            end
+
+            if turn % 2 == 0
+
+                return black_check
+
+            else
+
+                return white_check
 
             end
 
