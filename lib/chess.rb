@@ -106,17 +106,19 @@ module Chess
 
             result = possible_moves.include?(last) ? true : false
 
-            if result == false
+            if result == true
+
+                return true
+
+            else
 
                 possible_moves = Bishop.get_moves(start)
 
                 valid = possible_moves.include?(last) ? true : false
-
-            else
-
-                valid = result
             
             end
+
+            valid
 
         end
 
@@ -220,29 +222,55 @@ module Chess
 
             name = @board[start][0]
 
+            p name
+
             case name
 
-            when "White Knight" || "Black Knight"
+            when "White Knight" 
 
                 knight_moves(start, last, turn)
 
-            when "White Bishop" || "Black Bishop"
+            when "Black Knight"
+
+                knight_moves(start, last, turn)
+
+            when "White Bishop" 
 
                 bishop_moves(start, last, turn)
 
-            when "White Rook" || "Black Rook"
+            when "Black Bishop"
+
+                bishop_moves(start, last, turn)
+
+            when "White Rook" 
 
                 rook_moves(start, last, turn)
 
-            when "White King" || "Black King"
+            when "Black Rook"
+
+                rook_moves(start, last, turn)
+
+            when "White King" 
 
                 king_moves(start, last, turn)
 
-            when "White Queen" || "Black Queen" 
+            when "Black King"
+
+                king_moves(start, last, turn)
+
+            when "White Queen" 
 
                 queen_moves(start, last, turn)
 
-            when "White Pawn" || "Black Pawn"
+            when "Black Queen" 
+
+                queen_moves(start, last, turn)
+
+            when "White Pawn" 
+
+                pawn_moves(start, last, turn)
+
+            when "Black Pawn"
 
                 pawn_moves(start, last, turn)
 
@@ -430,6 +458,8 @@ module Chess
 
                             if @board[[first, second]][0].match(/Black/)
 
+                                p "first and second#{[first, second]}, white king#{@white_king}, turn #{turn}"
+
                                 legal = check_move_type([first, second], @white_king, turn)
 
                                 if legal
@@ -451,10 +481,6 @@ module Chess
                     second = 0
 
                 end
-
-                test = check_move_type([4,2], @white_king, turn)
-
-                p test, @board[[4,2]]
 
             end
 
