@@ -587,7 +587,7 @@ describe Chess do
 
                 game.display_board
 
-                result = game.check(1)
+                result = game.check(game.white_king, /Black/, 1)
 
                 expect(game.white_check).to eq(true)
 

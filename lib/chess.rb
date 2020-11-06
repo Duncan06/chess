@@ -60,6 +60,10 @@ module Chess
 
             @white_check = false
 
+            @black_checking_white = []
+
+            @white_checking_black = []
+
         end
 
         def knight_moves(start, last, turn)
@@ -170,9 +174,41 @@ module Chess
 
         def player_move(turn)
 
+            if @white_check == true
+
+                possible = get_out_of_check(@white_king, /White/, turn % 2, @black_checking_white)
+
+                if !possible
+
+                    p "Black wins! Checkmate."
+
+                end
+
+            elsif @black_check == true 
+
+                possible = get_out_of_check(@black_king, /Black/, turn % 2, @white_checking_black)
+
+                if !possible
+
+                    p "White wins! Checkmate."
+
+                end
+
+            end
+
             current_player = turn % 2
 
             current_player = (current_player == 0) ? "White" : "Black"
+
+            if current_player == "White"
+
+                king, color = @black_king, /White/
+
+            else
+
+                king, color = @white_king, /Black/
+
+            end
 
             puts "It is your turn #{current_player}"
 
@@ -206,7 +242,7 @@ module Chess
 
                 capture_piece?(start, last, turn)
 
-                check(turn)
+                check(king, color, turn)
 
             else
 
@@ -406,25 +442,11 @@ module Chess
 
         end
 
-        def check(turn)
+        def check(king, color, turn)
 
             first = 0
 
             second = 0
-
-            if turn % 2 == 0
-
-                color = /White/
-
-                king = @black_king
-
-            else 
-
-                color = /Black/
-
-                king = @white_king
-
-            end
 
             while first < 8
 
@@ -440,6 +462,10 @@ module Chess
 
                                 turn % 2 == 0 ? @black_check = true : @white_check = true
 
+                                turn % 2 == 0 ? @white_checking_black << [first, second]: @black_checking_white << [first, second]
+
+                                p @black_checking_white
+
                             end
 
                         end
@@ -453,6 +479,64 @@ module Chess
                 first += 1
 
                 second = 0
+
+            end
+
+        end
+
+        def get_out_of_check(king, color, turn, checking)
+
+            safe = []
+
+            possible_moves = King.get_moves(king)
+
+            safe << possible_moves.each{|x| check(x, color, turn)}
+
+            king_moves_out = safe.include? true ? true : false
+
+            if !king_moves_out
+
+                first = 0
+
+                second = 0
+
+                while first < 8
+
+                    while second < 8
+
+                        if @board[[first, second]] != nil
+
+                            if @board[[first, second]][0].match(color)
+
+                                checking.each do |square| 
+                                    
+                                    can_take = check_move_type([first, second], square, turn)
+
+                                    if can_take == true
+
+                                        copy = @board.clone
+
+                                        piece = copy[[first, second]]
+
+                                        copy[square] = piece
+
+                                    end
+
+                                end
+
+                            end
+
+                        end
+
+                        second += 1
+
+                    end
+
+                    first += 1
+
+                    second = 0
+
+                end
 
             end
 
