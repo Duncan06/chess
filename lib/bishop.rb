@@ -1,6 +1,6 @@
 class Bishop
 
-    def self.get_moves(current_square)
+    def self.get_moves(current_square, board)
 
         possible_moves = []
 
@@ -14,7 +14,17 @@ class Bishop
 
             y += 1
 
-            possible_moves << [x, y]
+            if board[[x, y]] == nil
+
+                possible_moves << [x, y]
+
+            else
+
+                possible_moves << [x, y]
+
+                break
+
+            end
 
         end
 
@@ -28,7 +38,17 @@ class Bishop
 
             y -= 1
 
-            possible_moves << [x, y]
+            if board[[x, y]] == nil
+
+                possible_moves << [x, y]
+
+            else
+
+                possible_moves << [x, y]
+
+                break
+
+            end
 
         end
 
@@ -42,7 +62,17 @@ class Bishop
 
             y -= 1
 
-            possible_moves << [x, y]
+            if board[[x, y]] == nil
+
+                possible_moves << [x, y]
+
+            else
+
+                possible_moves << [x, y]
+
+                break
+
+            end
 
         end
 
@@ -56,7 +86,17 @@ class Bishop
 
             y += 1
 
-            possible_moves << [x, y]
+            if board[[x, y]] == nil
+
+                possible_moves << [x, y]
+
+            else
+
+                possible_moves << [x, y]
+
+                break
+
+            end
 
         end
 

@@ -74,7 +74,7 @@ module Chess
 
         def bishop_moves(start, last, turn)
 
-            possible_moves = Bishop.get_moves(start)
+            possible_moves = Bishop.get_moves(start, @board)
 
             valid = possible_moves.include?(last) ? true : false
 
@@ -84,7 +84,7 @@ module Chess
 
         def rook_moves(start, last, turn)
 
-            possible_moves = Rook.get_moves(start)
+            possible_moves = Rook.get_moves(start, @board)
 
             valid = possible_moves.include?(last) ? true : false
 
@@ -102,7 +102,7 @@ module Chess
 
         def check_queen_move(start, last)
 
-            possible_moves = Rook.get_moves(start)
+            possible_moves = Rook.get_moves(start, @board)
 
             result = possible_moves.include?(last) ? true : false
 
@@ -112,7 +112,7 @@ module Chess
 
             else
 
-                possible_moves = Bishop.get_moves(start)
+                possible_moves = Bishop.get_moves(start, @board)
 
                 valid = possible_moves.include?(last) ? true : false
             
@@ -221,8 +221,6 @@ module Chess
         def check_move_type(start, last, turn)
 
             name = @board[start][0]
-
-            p name
 
             case name
 
@@ -457,8 +455,6 @@ module Chess
                         if @board[[first, second]] != nil
 
                             if @board[[first, second]][0].match(/Black/)
-
-                                p "first and second#{[first, second]}, white king#{@white_king}, turn #{turn}"
 
                                 legal = check_move_type([first, second], @white_king, turn)
 
