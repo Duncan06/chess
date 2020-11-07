@@ -595,7 +595,7 @@ describe Chess do
 
         describe "#get_out_of_check" do
 
-            it "decides if there is a way to block check" do
+            it "decides if there is a way to capture out of check" do
 
                 game = Chess::Board.new
 
@@ -603,7 +603,7 @@ describe Chess do
 
                 game.board[[4,2]] = ["Black Queen", "\u265B"]
 
-                result = game.get_out_of_check(game.white_king, /Black/, 0, [[4,2]])
+                result = game.get_out_of_check(game.white_king, /White/, 0, [[4,2]])
 
                 game.display_board
 

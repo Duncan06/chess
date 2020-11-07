@@ -542,6 +542,8 @@ module Chess
                                     
                                     can_take = check_move_type([first, second], square, turn)
 
+                                    p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
+
                                     if can_take == true
 
                                         copy = @board.clone
@@ -549,6 +551,8 @@ module Chess
                                         piece = copy[[first, second]]
 
                                         copy[square] = piece
+
+                                        color == /White/ ? color = /Black/ : color = /White/
 
                                         safety = recheck(king, color, turn, copy)
 
@@ -606,11 +610,13 @@ module Chess
 
                             legal = check_move_type([first, second], king, turn)
 
+                            p "#{legal}, with this postion #{@board[[first, second]]}"
+
                             if legal
 
-                                turn % 2 == 0 ? black_check = true : white_check = true
+                                turn % 2 == 0 ? white_check = true  : black_check = true
 
-                                turn % 2 == 0 ? white_checking_black << [first, second]: black_checking_white << [first, second]
+                                turn % 2 == 0 ? black_checking_white << [first, second]: white_checking_black << [first, second]
 
                             end
 
@@ -630,11 +636,11 @@ module Chess
 
             if turn % 2 == 0
 
-                return black_check
+                white_check == nil ? true : false
 
             else
 
-                return white_check
+                black_check == nil ? true : false
 
             end
 
