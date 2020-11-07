@@ -346,10 +346,6 @@ module Chess
 
                         @board[start] = nil
 
-                    else
-
-                        p "Cannot move here."
-
                     end
 
                 else
@@ -369,10 +365,6 @@ module Chess
                         @board[last] = piece
 
                         @board[start] = nil
-
-                    else
-
-                        p "Cannot move here."
 
                     end
 
@@ -408,7 +400,11 @@ module Chess
 
                     else
 
-                        p "Cannot move here."
+                        if !@white_check
+
+                            p "Cannot move here."
+
+                        end
 
                     end
 
@@ -420,7 +416,11 @@ module Chess
 
                     else
 
-                        p "Cannot move here."
+                        if !@black_check
+
+                            p "Cannot move here."
+
+                        end
 
                     end
 
@@ -464,13 +464,29 @@ module Chess
 
                         if @board[[first, second]][0].match(color)
 
-                            legal = check_move_type([first, second], king, turn)
+                            legal = check_move_type([first, second], king, (turn % 2) + 1)
 
                             if legal
 
-                                turn % 2 == 0 ? @black_check = true : @white_check = true
+                                turn % 2 == 0 ? @white_check = true : @black_check = true
 
-                                turn % 2 == 0 ? @white_checking_black << [first, second]: @black_checking_white << [first, second]
+                                if turn % 2 == 0 
+
+                                    if !@black_checking_white.include? [first, second]
+                                    
+                                        @black_checking_white << [first, second]
+
+                                    end
+
+                                else
+
+                                    if !@white_checking_black.include? [first, second]
+                                    
+                                        @white_checking_black << [first, second]
+
+                                    end
+
+                                end
 
                             end
 
@@ -506,11 +522,7 @@ module Chess
 
             end 
 
-            p safe
-
             king_moves_out = safe.include? true ? true : false
-
-            p king_moves_out
 
             if !king_moves_out
 
@@ -527,12 +539,8 @@ module Chess
                             if @board[[first, second]][0].match(color)
 
                                 checking.each do |square| 
-
-                                    p "this is square #{square}"
                                     
                                     can_take = check_move_type([first, second], square, turn)
-
-                                    p can_take, @board[[first, second]]
 
                                     if can_take == true
 

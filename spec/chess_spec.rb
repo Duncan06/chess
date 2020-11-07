@@ -581,13 +581,11 @@ describe Chess do
 
                 game.board[[4,1]] = nil
 
-                game.board[[4,3]] = ["Black Queen", "\u265B"]
-
-                game.capture_piece?([4,3], [4,2], 1)
+                game.board[[4,2]] = ["Black Queen", "\u265B"]
 
                 game.display_board
 
-                game.check(game.white_king, /Black/, 1)
+                game.check(game.white_king, /Black/, 0)
 
                 expect(game.white_check).to eq(true)
 
@@ -603,11 +601,9 @@ describe Chess do
 
                 game.board[[4,1]] = nil
 
-                game.board[[4,3]] = ["Black Queen", "\u265B"]
+                game.board[[4,2]] = ["Black Queen", "\u265B"]
 
-                game.capture_piece?([4,3], [4,2], 1)
-
-                result = game.get_out_of_check(game.white_king, /White/, 0, [[4,2]])
+                result = game.get_out_of_check(game.white_king, /Black/, 0, [[4,2]])
 
                 game.display_board
 
