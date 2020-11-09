@@ -613,6 +613,26 @@ describe Chess do
 
         end
 
+        describe "#block_check" do
+
+            it "moves a piece to intervene in path of piece causing check" do
+
+                game = Chess::Board.new
+
+                game.board[[4,1]] = nil
+
+                game.board[[4,3]] = ["Black Queen", "\u265B"]
+
+                result = game.block_check(game.white_king, /White/, 0, [[4,3]])
+
+                game.display_board
+
+                expect(result).to eq(true)
+
+            end
+
+        end
+
         describe "#display_board" do
 
             it "shows game board" do

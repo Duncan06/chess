@@ -66,45 +66,69 @@ module Chess
 
         end
 
-        def knight_moves(start, last, turn)
+        def knight_moves(start, last, turn, report=false)
 
             possible_moves = Knight.get_moves(start)
 
+            if report
+
+                return possible_moves
+
+            end
+
             valid = possible_moves.include?(last) ? true : false
 
             check_capture_or_move(start, last, turn, valid)
 
         end
 
-        def bishop_moves(start, last, turn)
+        def bishop_moves(start, last, turn, report=false)
 
             possible_moves = Bishop.get_moves(start, @board)
 
+            if report
+
+                return possible_moves
+
+            end
+
             valid = possible_moves.include?(last) ? true : false
 
             check_capture_or_move(start, last, turn, valid)
 
         end
 
-        def rook_moves(start, last, turn)
+        def rook_moves(start, last, turn, report=false)
 
             possible_moves = Rook.get_moves(start, @board)
 
+            if report
+
+                return possible_moves
+
+            end
+
             valid = possible_moves.include?(last) ? true : false
 
             check_capture_or_move(start, last, turn, valid)
 
         end
 
-        def queen_moves(start, last, turn)
+        def queen_moves(start, last, turn, report=false)
 
-            valid = check_queen_move(start, last)
+            valid = check_queen_move(start, last, report)
+
+            if report
+
+                return valid
+
+            end
 
             check_capture_or_move(start, last, turn, valid)
 
         end
 
-        def check_queen_move(start, last)
+        def check_queen_move(start, last, report)
 
             possible_moves = Rook.get_moves(start, @board)
 
@@ -116,19 +140,33 @@ module Chess
 
             else
 
-                possible_moves = Bishop.get_moves(start, @board)
+                possible_moves2 = Bishop.get_moves(start, @board)
 
-                valid = possible_moves.include?(last) ? true : false
+                valid = possible_moves2.include?(last) ? true : false
             
+            end
+
+            possible_moves << possible_moves2
+
+            if report
+
+                return possible_moves
+
             end
 
             valid
 
         end
 
-        def king_moves(start, last, turn)
+        def king_moves(start, last, turn, report=false)
 
             possible_moves = King.get_moves(start)
+
+            if report
+
+                return possible_moves
+
+            end
 
             valid = possible_moves.include?(last) ? true : false
 
@@ -136,9 +174,15 @@ module Chess
 
         end
 
-        def pawn_moves(start, last, turn)
+        def pawn_moves(start, last, turn, report=false)
 
             possible_moves = Pawn.get_moves(@board, start, turn)
+
+            if report
+
+                return possible_moves
+
+            end
 
             valid = possible_moves.include?(last) ? true : false
 
@@ -544,7 +588,7 @@ module Chess
 
                                     p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
 
-                                    if can_take == true
+                                    if can_take
 
                                         copy = @board.clone
 
@@ -556,9 +600,23 @@ module Chess
 
                                         safety = recheck(king, color, turn, copy)
 
-                                        if safety == true
+                                        if safety
 
                                             return true
+
+                                        end
+
+                                    else
+
+                                        copy = @board.clone
+
+                                        piece = copy[[first, second]]
+
+                                        copy[square] = piece
+
+                                        can_block = block_check(king, color, turn, copy)
+
+                                        if can_block
 
                                         end
 
@@ -643,6 +701,12 @@ module Chess
                 black_check == nil ? true : false
 
             end
+
+        end
+
+        def block_check(king, color, turn, board)
+
+            true
 
         end
 
