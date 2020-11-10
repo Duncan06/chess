@@ -306,7 +306,7 @@ module Chess
 
         end
 
-        def check_move_type(start, last, turn)
+        def check_move_type(start, last, turn, report=false)
 
             name = @board[start][0]
 
@@ -314,51 +314,51 @@ module Chess
 
             when "White Knight" 
 
-                knight_moves(start, last, turn)
+                knight_moves(start, last, turn, report)
 
             when "Black Knight"
 
-                knight_moves(start, last, turn)
+                knight_moves(start, last, turn, report)
 
             when "White Bishop" 
 
-                bishop_moves(start, last, turn)
+                bishop_moves(start, last, turn, report)
 
             when "Black Bishop"
 
-                bishop_moves(start, last, turn)
+                bishop_moves(start, last, turn, report)
 
             when "White Rook" 
 
-                rook_moves(start, last, turn)
+                rook_moves(start, last, turn, report)
 
             when "Black Rook"
 
-                rook_moves(start, last, turn)
+                rook_moves(start, last, turn, report)
 
             when "White King" 
 
-                king_moves(start, last, turn)
+                king_moves(start, last, turn, report)
 
             when "Black King"
 
-                king_moves(start, last, turn)
+                king_moves(start, last, turn, report)
 
             when "White Queen" 
 
-                queen_moves(start, last, turn)
+                queen_moves(start, last, turn, report)
 
             when "Black Queen" 
 
-                queen_moves(start, last, turn)
+                queen_moves(start, last, turn, report)
 
             when "White Pawn" 
 
-                pawn_moves(start, last, turn)
+                pawn_moves(start, last, turn, report)
 
             when "Black Pawn"
 
-                pawn_moves(start, last, turn)
+                pawn_moves(start, last, turn, report)
 
             else
 
@@ -606,19 +606,49 @@ module Chess
 
                                         end
 
-                                    else
+                                    end
 
-                                        copy = @board.clone
+                                end
 
-                                        piece = copy[[first, second]]
+                            end
 
-                                        copy[square] = piece
+                        end
 
-                                        can_block = block_check(king, color, turn, copy)
+                        second += 1
 
-                                        if can_block
+                    end
 
-                                        end
+                    first += 1
+
+                    second = 0
+
+                end
+
+                first = 0
+
+                second = 0
+
+                while first < 8
+
+                    while second < 8
+
+                        if @board[[first, second]] != nil
+
+                            if @board[[first, second]][0].match(color)
+
+                                checking.each do |square| 
+
+                                    copy = @board.clone
+
+                                    piece = copy[[first, second]]
+
+                                    copy[square] = piece
+
+                                    can_block = block_check(king, color, turn, copy)
+
+                                    if can_block
+
+                                        return true
 
                                     end
 
@@ -637,6 +667,7 @@ module Chess
                     second = 0
 
                 end
+
 
             end
 
@@ -665,6 +696,8 @@ module Chess
                     if board[[first, second]] != nil
 
                         if board[[first, second]][0].match(color)
+
+                            p "Inside recheck this is"
 
                             legal = check_move_type([first, second], king, turn)
 
@@ -706,7 +739,129 @@ module Chess
 
         def block_check(king, color, turn, board)
 
-            true
+            p "Enter block check"
+
+            moves = []
+
+            if color == "White"
+
+                p "Here is if white in block"
+
+                black_checks = @black_checking_white
+
+                black_checks.each do |piece|
+
+                    moves << check_move_type(piece[0], piece[1], turn, true)
+
+                end
+
+                p "moves after getting black checks #{moves}"
+
+                eval_blocks(king, color, turn, board, moves)
+
+            else
+
+                p "Here in else for block check"
+
+                white_checks = @white_checking_black
+
+                white_checks.each do |piece|
+
+                    moves << check_move_type(piece[0], piece[1], turn, true)
+
+                end
+
+                p "moves after getting black checks #{moves}"
+
+                eval_blocks(king, color, turn, board, moves)
+
+            end
+
+        end
+
+        def eval_blocks(king, color, turn, board, moves)
+
+            p "Enter eval_blocks"
+
+            pieces_eval = moves.length
+
+            scan = 0
+
+            first = 0
+
+            second = 0
+
+            while first < 8
+
+                while second < 8
+
+                    if board[[first, second]] != nil
+
+                        if board[[first, second]][0].match(color)
+
+                            p "Get current piece moves"
+
+                            current_piece_moves = check_move_type([first, second], king, turn, true)
+
+                            current_piece_moves.each do |block|
+
+                                while scan <= pieces_eval
+
+                                    if scan == pieces_eval
+
+                                        new_setup = (recheck(king, color, turn, board)) rescue nil
+
+                                        if nil
+                                            
+                                            break
+
+                                        end
+
+                                        if new_setup
+
+                                            return true
+
+                                        end
+
+                                    end
+
+                                    p "This is moves #{moves}"
+
+                                    possible_block = moves[scan].include? block
+
+                                    p "This is possible_block value #{possible_block}"
+
+                                    if possible_block
+
+                                        scan += 1
+
+                                    else
+
+                                        break
+
+                                    end
+
+                                end
+
+                            end
+                            
+                            scan = 0
+
+                        end
+
+                    end
+
+                    second += 1
+
+                end
+
+                first += 1
+
+                second = 0
+
+            end
+
+            false
 
         end
 

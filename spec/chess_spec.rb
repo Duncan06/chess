@@ -583,7 +583,7 @@ describe Chess do
 
                 game.board[[4,2]] = ["Black Queen", "\u265B"]
 
-                game.display_board
+                # game.display_board
 
                 game.check(game.white_king, /Black/, 0)
 
@@ -605,7 +605,7 @@ describe Chess do
 
                 result = game.get_out_of_check(game.white_king, /White/, 0, [[4,2]])
 
-                game.display_board
+                # game.display_board
 
                 expect(result).to eq(true)
 
@@ -623,7 +623,7 @@ describe Chess do
 
                 game.board[[4,3]] = ["Black Queen", "\u265B"]
 
-                result = game.block_check(game.white_king, /White/, 0, [[4,3]])
+                result = game.block_check(game.white_king, /White/, 0, game.board)
 
                 game.display_board
 
