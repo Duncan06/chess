@@ -623,6 +623,8 @@ describe Chess do
 
                 game.board[[4,3]] = ["Black Queen", "\u265B"]
 
+                game.check([4,0], /Black/, 0)
+
                 result = game.block_check(game.white_king, /White/, 0, game.board)
 
                 game.display_board

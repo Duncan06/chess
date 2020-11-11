@@ -130,11 +130,19 @@ module Chess
 
         def check_queen_move(start, last, report)
 
+            p "report in queen moves #{report}"
+
             possible_moves = Rook.get_moves(start, @board)
 
             result = possible_moves.include?(last) ? true : false
 
-            if result == true
+            if result == true && report
+
+                return possible_moves
+
+            end
+
+            if result == true && !report
 
                 return true
 
@@ -697,7 +705,7 @@ module Chess
 
                         if board[[first, second]][0].match(color)
 
-                            p "Inside recheck this is"
+                            p "This is inside recheck "
 
                             legal = check_move_type([first, second], king, turn)
 
@@ -747,11 +755,11 @@ module Chess
 
                 p "Here is if white in block"
 
-                black_checks = @black_checking_white
+                white_checks = @white_checking_black
 
-                black_checks.each do |piece|
+                white_checks.each do |piece|
 
-                    moves << check_move_type(piece[0], piece[1], turn, true)
+                    moves << check_move_type(piece, king, turn, true)
 
                 end
 
@@ -763,15 +771,17 @@ module Chess
 
                 p "Here in else for block check"
 
-                white_checks = @white_checking_black
+                p "Here is white checking black #{@white_checking_black} and black checking white #{@black_checking_white}"
 
-                white_checks.each do |piece|
+                black_checks = @black_checking_white
 
-                    moves << check_move_type(piece[0], piece[1], turn, true)
+                black_checks.each do |piece|
+
+                    moves << check_move_type(piece, king, turn, true)
 
                 end
 
-                p "moves after getting black checks #{moves}"
+                p "moves after getting white checks #{moves}"
 
                 eval_blocks(king, color, turn, board, moves)
 
@@ -805,6 +815,8 @@ module Chess
 
                             current_piece_moves.each do |block|
 
+                                p "This is current block #{block}"
+
                                 while scan <= pieces_eval
 
                                     if scan == pieces_eval
@@ -825,7 +837,7 @@ module Chess
 
                                     end
 
-                                    p "This is moves #{moves}"
+                                    p "This is moves #{moves} from eval blocks"
 
                                     possible_block = moves[scan].include? block
 
