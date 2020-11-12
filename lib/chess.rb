@@ -130,8 +130,6 @@ module Chess
 
         def check_queen_move(start, last, report)
 
-            p "report in queen moves #{report}"
-
             possible_moves = Rook.get_moves(start, @board)
 
             result = possible_moves.include?(last) ? true : false
@@ -747,13 +745,9 @@ module Chess
 
         def block_check(king, color, turn, board)
 
-            p "Enter block check"
-
             moves = []
 
             if color == "White"
-
-                p "Here is if white in block"
 
                 white_checks = @white_checking_black
 
@@ -768,10 +762,6 @@ module Chess
                 eval_blocks(king, color, turn, board, moves)
 
             else
-
-                p "Here in else for block check"
-
-                p "Here is white checking black #{@white_checking_black} and black checking white #{@black_checking_white}"
 
                 black_checks = @black_checking_white
 
@@ -793,6 +783,8 @@ module Chess
 
             p "Enter eval_blocks"
 
+            p "This is moves #{moves} from eval blocks"
+
             pieces_eval = moves.length
 
             scan = 0
@@ -800,6 +792,8 @@ module Chess
             first = 0
 
             second = 0
+
+            blocking_square = nil
 
             while first < 8
 
@@ -821,23 +815,45 @@ module Chess
 
                                     if scan == pieces_eval
 
-                                        new_setup = (recheck(king, color, turn, board)) rescue nil
+                                        p "scan == pieces_eval"
 
-                                        if nil
-                                            
+                                        p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
+
+                                        p "This is value of board square #{board[[first, second]][0]}"
+
+                                        if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
+
+                                            boardcopy = board
+
+                                            boardcopy[[blocking_square[0], blocking_square[1]]] = board[[first, second]]
+
+                                            boardcopy[[first, second]] = nil
+
+                                            p "This is color #{color}"
+
+                                            opposite_color = nil
+
+                                            color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
+
+                                            new_setup = (recheck(king, opposite_color, turn, boardcopy))
+
+                                            p "This is new setup #{new_setup}"
+
+                                            if new_setup
+
+                                                p "made it to true"
+
+                                                return true
+
+                                            end
+
+                                        else
+
                                             break
 
                                         end
 
-                                        if new_setup
-
-                                            return true
-
-                                        end
-
                                     end
-
-                                    p "This is moves #{moves} from eval blocks"
 
                                     possible_block = moves[scan].include? block
 
@@ -846,6 +862,8 @@ module Chess
                                     if possible_block
 
                                         scan += 1
+
+                                        blocking_square = block
 
                                     else
 
