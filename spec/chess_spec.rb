@@ -611,6 +611,26 @@ describe Chess do
 
             end
 
+            it "captures and blocks piece correctly" do
+
+                game = Chess::Board.new
+
+                game.board[[4,1]] = nil
+
+                game.board[[4,2]] = ["Black Queen", "\u265B"]
+
+                game.board[[4,4]] = ["Black Rook", "\u265C"]
+
+                game.check([4,0], /Black/, 0)
+
+                result = game.get_out_of_check(game.white_king, /White/, 0, [[4,2]])
+
+                game.display_board
+
+                expect(result).to eq(true)
+
+            end
+
         end
 
         describe "#block_check" do

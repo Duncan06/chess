@@ -298,9 +298,29 @@ module Chess
 
             if legal != false
 
-                capture_piece?(start, last, turn)
+                if current_player == "White" && @white_check == true
 
-                check(king, color, turn)
+                    board_copy = @board
+
+                    capture_piece?(start, last, turn)
+
+                    check(@white_king, /Black/, turn)
+
+                elsif current_player == "Black" && @black_check == true
+
+                    board_copy = @board
+
+                    capture_piece?(start, last, turn)
+
+                    check(@black_king, /White/, turn)
+
+                else
+
+                    capture_piece?(start, last, turn)
+
+                    check(king, color, turn)
+
+                end
 
             else
 
@@ -309,6 +329,8 @@ module Chess
                 player_move(turn)
 
             end
+
+            turn += 1
 
         end
 
@@ -674,7 +696,6 @@ module Chess
 
                 end
 
-
             end
 
             false
@@ -809,7 +830,7 @@ module Chess
 
                             current_piece_moves.each do |block|
 
-                                p "This is current block #{block}"
+                                p "This is current block #{block} and is #{board[block]}"
 
                                 while scan <= pieces_eval
 
@@ -829,21 +850,19 @@ module Chess
 
                                             boardcopy[[first, second]] = nil
 
-                                            p "This is color #{color}"
-
                                             opposite_color = nil
 
                                             color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
 
                                             new_setup = (recheck(king, opposite_color, turn, boardcopy))
 
-                                            p "This is new setup #{new_setup}"
-
                                             if new_setup
 
-                                                p "made it to true"
-
                                                 return true
+
+                                            else
+
+                                                break
 
                                             end
 
@@ -855,7 +874,13 @@ module Chess
 
                                     end
 
-                                    possible_block = moves[scan].include? block
+                                    possible_block = moves[scan].include? block rescue nil
+
+                                    if possible_block == nil
+
+                                        break
+
+                                    end
 
                                     p "This is possible_block value #{possible_block}"
 
