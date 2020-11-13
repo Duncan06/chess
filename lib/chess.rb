@@ -222,6 +222,38 @@ module Chess
 
         end
 
+        def player_response(current_player)
+
+            puts "It is your turn #{current_player}"
+
+            puts "Please enter a square to select in the format C4"
+
+            start = player_select()
+
+            if start == false
+
+                p "Exited selection"
+
+                player_move(turn)
+
+            end
+
+            puts "where would you like to move to?"
+
+            last = player_select()
+
+            if last == false
+
+                p "Exited selection"
+
+                player_move(turn)
+
+            end
+
+            return start, last
+
+        end
+
         def player_move(turn)
 
             if @white_check == true
@@ -268,31 +300,7 @@ module Chess
 
             end
 
-            puts "It is your turn #{current_player}"
-
-            puts "Please enter a square to select in the format C4"
-
-            start = player_select()
-
-            if start == false
-
-                p "Exited selection"
-
-                player_move(turn)
-
-            end
-
-            puts "where would you like to move to?"
-
-            last = player_select()
-
-            if last == false
-
-                p "Exited selection"
-
-                player_move(turn)
-
-            end
+            start, last = player_response(current_player)
 
             legal = check_move_type(start, last, turn)
 
@@ -306,6 +314,36 @@ module Chess
 
                     check(@white_king, /Black/, turn)
 
+                    if @white_check == true
+
+                        until !@white_check do
+
+                            p "You must move yourself out of check"
+
+                            @board = board_copy
+
+                            start, last = player_response(current_player)
+
+                            legal = check_move_type(start, last, turn)
+
+                            if legal != false
+
+                                capture_piece?(start, last, turn)
+
+                                check(@white_king, /Black/, turn)
+                                            
+                            else
+
+                                "This piece cannot move there."
+
+                                player_move(turn)
+
+                            end
+
+                        end
+
+                    end
+
                 elsif current_player == "Black" && @black_check == true
 
                     board_copy = @board
@@ -313,6 +351,36 @@ module Chess
                     capture_piece?(start, last, turn)
 
                     check(@black_king, /White/, turn)
+
+                    if @blacke_check == true
+
+                        until !@black_check do
+
+                            p "You must move yourself out of check"
+
+                            @board = board_copy
+
+                            start, last = player_response(current_player)
+
+                            legal = check_move_type(start, last, turn)
+
+                            if legal != false
+
+                                capture_piece?(start, last, turn)
+
+                                check(@black_king, /White/, turn)
+                                            
+                            else
+
+                                "This piece cannot move there."
+
+                                player_move(turn)
+
+                            end
+
+                        end
+
+                    end
 
                 else
 
