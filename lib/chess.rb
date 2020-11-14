@@ -196,6 +196,26 @@ module Chess
 
         end
 
+        def play_game()
+
+            game_over = false
+
+            turn = 0
+
+            until game_over
+
+                display_board()
+            
+                game_over = player_move(turn)
+
+                turn += 1
+
+            end
+
+        end
+
+
+
         def player_select()
 
             answer = (gets.chomp) rescue nil
@@ -226,7 +246,7 @@ module Chess
 
             puts "It is your turn #{current_player}"
 
-            puts "Please enter a square to select in the format C4"
+            puts "Please enter a square to select in the format c4"
 
             start = player_select()
 
@@ -264,6 +284,8 @@ module Chess
 
                     p "Black wins! Checkmate."
 
+                    return true
+
                 else 
 
                     p "White is in check."
@@ -277,6 +299,8 @@ module Chess
                 if !possible
 
                     p "White wins! Checkmate."
+
+                    return true
 
                 else
 
@@ -312,11 +336,17 @@ module Chess
 
                     capture_piece?(start, last, turn)
 
-                    check(@white_king, /Black/, turn)
+                    current = check(@white_king, /Black/, turn)
+
+                    if !current
+
+                        @white_check = false
+
+                    end
 
                     if @white_check == true
 
-                        until !@white_check do
+                        while @white_check do
 
                             p "You must move yourself out of check"
 
@@ -330,7 +360,13 @@ module Chess
 
                                 capture_piece?(start, last, turn)
 
-                                check(@white_king, /Black/, turn)
+                                current = check(@white_king, /Black/, turn)
+
+                                if !current
+
+                                    @white_check = false
+
+                                end
                                             
                             else
 
@@ -350,7 +386,13 @@ module Chess
 
                     capture_piece?(start, last, turn)
 
-                    check(@black_king, /White/, turn)
+                    current = check(@black_king, /White/, turn)
+
+                    if !current 
+
+                        @black_check = false
+
+                    end
 
                     if @blacke_check == true
 
@@ -368,7 +410,13 @@ module Chess
 
                                 capture_piece?(start, last, turn)
 
-                                check(@black_king, /White/, turn)
+                                current = check(@black_king, /White/, turn)
+
+                                if !current 
+
+                                    @black_check = false
+            
+                                end
                                             
                             else
 
@@ -398,7 +446,7 @@ module Chess
 
             end
 
-            turn += 1
+            return false
 
         end
 
@@ -616,6 +664,8 @@ module Chess
                                     
                                         @black_checking_white << [first, second]
 
+                                        return true
+
                                     end
 
                                 else
@@ -623,6 +673,8 @@ module Chess
                                     if !@white_checking_black.include? [first, second]
                                     
                                         @white_checking_black << [first, second]
+
+                                        return true
 
                                     end
 
@@ -643,6 +695,8 @@ module Chess
                 second = 0
 
             end
+
+            return false
 
         end
 
@@ -1087,3 +1141,7 @@ module Chess
     end
 
 end
+
+game = Chess::Board.new
+
+game.play_game
