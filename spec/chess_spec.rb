@@ -591,6 +591,23 @@ describe Chess do
 
             end
 
+            it "decides with queen correctly" do 
+
+
+                game = Chess::Board.new
+
+                game.board[[4,1]] = nil
+
+                game.board[[4,2]] = ["Black Queen", "\u265B"]
+
+                # game.display_board
+
+                game.check(game.white_king, /Black/, 0)
+
+                expect(game.white_check).to eq(true)
+
+            end
+
         end
 
         describe "#get_out_of_check" do

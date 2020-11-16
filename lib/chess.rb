@@ -34,21 +34,21 @@ module Chess
 
             @spots = { 
                     
-                        "a1" => [0,0], "a2" => [1,0], "a3" => [2, 0], "a4" => [3, 0], "a5" => [4, 0], "a6" => [5, 0], "a7" => [6, 0],  "a8" => [7, 0],
+                        "a1" => [0, 0], "b1" => [1, 0], "c1" => [2, 0], "d1" => [3, 0], "e1" => [4, 0], "f1" => [5, 0], "g1" => [6, 0], "h1" => [7, 0],
 
-                        "b1" => [0, 1], "b2" => [1, 1],  "b3" => [2, 1],  "b4" => [3, 1], "b5" => [4, 1], "b6" => [5, 1],  "b7" => [6, 1], "b8" => [7, 1],
+                        "a2" => [0, 1], "b2" => [1, 1], "c2" => [2, 1], "d2" => [3, 1], "e2" => [4, 1], "f2" => [5, 1], "g2" => [6, 1]," h2" => [7, 1],
 
-                        "c1" => [0, 2], "c2" => [1, 2], "c3" => [2, 2], "c4" => [3, 2], "c5" => [4, 2], "c6" => [5, 2], "c7" => [6, 2],"c8" => [7, 2],
+                        "a3" => [0, 2], "b3" => [1, 2], "c3" => [2, 2], "d3" => [3, 2], "e3" => [4, 2], "f3" => [5, 2], "g3" => [6, 2], "h3" => [7, 2],
                         
-                        "d1" => [0, 3], "d2" => [1, 3], "d3" => [2, 3], "d4" => [3, 3], "d5" => [4, 3], "d6" => [5, 3], "d7" => [6, 3], "d8" => [7, 3],
+                        "a4" => [0, 3], "b4" => [1, 3], "c4" => [2, 3], "d4" => [3, 3], "e4" => [4, 3], "f4" => [5, 3], "g4" => [6, 3], "h4" => [7, 3],
 
-                        "e1" => [0, 4],  "e2" => [1, 4],  "e3" => [2, 4],  "e4" => [3, 4], "e5" => [4, 4], "e6" => [5, 4], "e7" => [6, 4], "e8" => [7, 4],
+                        "a5" => [0, 4], "b5" => [1, 4], "c5" => [2, 4], "d5" => [3, 4], "e5" => [4, 4], "f5" => [5, 4], "g5" => [6, 4], "h5" => [7, 4],
 
-                        "f1" => [0, 5], "f2" => [1, 5],  "f3" => [2, 5], "f4" => [3, 5],  "f5" => [4, 5], "f6" => [5, 5], "f7" => [6, 5], "f8" => [7, 5],
+                        "a6" => [0, 5], "b6" => [1, 5], "c6" => [2, 5], "d6" => [3, 5], "e6" => [4, 5], "f6" => [5, 5], "g6" => [6, 5], "h6" => [7, 5],
 
-                        "g1" => [0, 6], "g2" => [1, 6], "g3" => [2, 6],  "g4" => [3, 6], "g5" => [4, 6], "g6" => [5, 6], "g7" => [6, 6], "g8" => [7, 6],
+                        "a7" => [0, 6], "b7" => [1, 6], "c7" => [2, 6], "d7" => [3, 6], "e7" => [4, 6], "f7" => [5, 6], "g7" => [6, 6], "h7" => [7, 6],
 
-                        "h1" => [0, 7], "h2" => [1, 7], "h3" => [2, 7], "h4" => [3, 7], "h5" => [4, 7], "h6" => [5, 7], "h7" => [6, 7], "h8" => [7, 7]
+                        "a8" => [0, 7], "b8" => [1, 7], "c8" => [2, 7], "d8" => [3, 7], "e8" => [4, 7], "f8" => [5, 7], "g8" => [6, 7], "h8" => [7, 7]
 
                     }
 
@@ -65,7 +65,7 @@ module Chess
             @white_checking_black = []
 
         end
-
+        
         def knight_moves(start, last, turn, report=false)
 
             possible_moves = Knight.get_moves(start)
@@ -440,7 +440,7 @@ module Chess
 
             else
 
-                "This piece cannot move there."
+                "This piece cannot move there, or you have selected no piece."
 
                 player_move(turn)
 
@@ -452,7 +452,13 @@ module Chess
 
         def check_move_type(start, last, turn, report=false)
 
-            name = @board[start][0]
+            name = @board[start][0] rescue nil
+
+            if nil
+
+                return false
+
+            end
 
             case name
 
@@ -736,7 +742,7 @@ module Chess
                                     
                                     can_take = check_move_type([first, second], square, turn)
 
-                                    p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
+                                    # p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
 
                                     if can_take
 
@@ -846,11 +852,11 @@ module Chess
 
                         if board[[first, second]][0].match(color)
 
-                            p "This is inside recheck "
+                            # p "This is inside recheck "
 
                             legal = check_move_type([first, second], king, turn)
 
-                            p "#{legal}, with this postion #{@board[[first, second]]}"
+                            # p "#{legal}, with this postion #{@board[[first, second]]}"
 
                             if legal
 
@@ -898,9 +904,17 @@ module Chess
 
                     moves << check_move_type(piece, king, turn, true)
 
+                rescue nil
+
+                    if nil
+
+                        return
+
+                    end
+
                 end
 
-                p "moves after getting black checks #{moves}"
+                # p "moves after getting black checks #{moves}"
 
                 eval_blocks(king, color, turn, board, moves)
 
@@ -924,9 +938,9 @@ module Chess
 
         def eval_blocks(king, color, turn, board, moves)
 
-            p "Enter eval_blocks"
+            # p "Enter eval_blocks"
 
-            p "This is moves #{moves} from eval blocks"
+            # p "This is moves #{moves} from eval blocks"
 
             pieces_eval = moves.length
 
@@ -946,23 +960,23 @@ module Chess
 
                         if board[[first, second]][0].match(color)
 
-                            p "Get current piece moves"
+                            # p "Get current piece moves"
 
                             current_piece_moves = check_move_type([first, second], king, turn, true)
 
                             current_piece_moves.each do |block|
 
-                                p "This is current block #{block} and is #{board[block]}"
+                                # p "This is current block #{block} and is #{board[block]}"
 
                                 while scan <= pieces_eval
 
                                     if scan == pieces_eval
 
-                                        p "scan == pieces_eval"
+                                        # p "scan == pieces_eval"
 
-                                        p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
+                                        # p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
 
-                                        p "This is value of board square #{board[[first, second]][0]}"
+                                        # p "This is value of board square #{board[[first, second]][0]}"
 
                                         if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
 
@@ -1004,7 +1018,7 @@ module Chess
 
                                     end
 
-                                    p "This is possible_block value #{possible_block}"
+                                    # p "This is possible_block value #{possible_block}"
 
                                     if possible_block
 
@@ -1132,7 +1146,7 @@ module Chess
                 _________________________________
                 | #{b1} | #{b2} | #{b3} | #{b4} | #{b5} | #{b6} | #{b7} | #{b8} |
                 _________________________________
-                | #{a1} | #{a2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
+                | #{a1} | #{b2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
                 ---------------------------------
             
             "
@@ -1142,6 +1156,6 @@ module Chess
 
 end
 
-game = Chess::Board.new
+# game = Chess::Board.new
 
-game.play_game
+# game.play_game
