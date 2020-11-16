@@ -407,7 +407,7 @@ describe Chess do
 
                 io.puts "U2"
 
-                io.puts "b1"
+                io.puts "a2"
 
                 io.rewind
 
@@ -439,7 +439,7 @@ describe Chess do
 
                 io.puts "b2"
 
-                io.puts "c2"
+                io.puts "b3"
 
                 io.rewind
 
@@ -491,7 +491,7 @@ describe Chess do
 
             #     io.puts "b2"
 
-            #     io.puts "c3"
+            #     io.puts "b3"
 
             #     io.rewind
 
