@@ -246,13 +246,13 @@ module Chess
 
             puts "It is your turn #{current_player}"
 
-            puts "Please enter a square to select in the format c4"
+            puts "Please enter a square to select in the format C4"
 
             start = player_select()
 
             if start == false
 
-                p "Exited selection"
+                puts "Exited selection"
 
                 player_move(turn)
 
@@ -264,7 +264,7 @@ module Chess
 
             if last == false
 
-                p "Exited selection"
+                puts "Exited selection"
 
                 player_move(turn)
 
@@ -282,13 +282,13 @@ module Chess
 
                 if !possible
 
-                    p "Black wins! Checkmate."
+                    puts "Black wins! Checkmate."
 
                     return true
 
                 else 
 
-                    p "White is in check."
+                    puts "White is in check."
 
                 end
 
@@ -298,13 +298,13 @@ module Chess
 
                 if !possible
 
-                    p "White wins! Checkmate."
+                    puts "White wins! Checkmate."
 
                     return true
 
                 else
 
-                    p "Black is in check."
+                    puts "Black is in check."
 
                 end
 
@@ -348,7 +348,7 @@ module Chess
 
                         while @white_check do
 
-                            p "You must move yourself out of check"
+                            puts "You must move yourself out of check"
 
                             @board = board_copy
 
@@ -370,7 +370,7 @@ module Chess
                                             
                             else
 
-                                "This piece cannot move there."
+                                puts "This piece cannot move there."
 
                                 player_move(turn)
 
@@ -398,7 +398,7 @@ module Chess
 
                         until !@black_check do
 
-                            p "You must move yourself out of check"
+                            puts "You must move yourself out of check"
 
                             @board = board_copy
 
@@ -440,7 +440,7 @@ module Chess
 
             else
 
-                "This piece cannot move there, or you have selected no piece."
+                puts "This piece cannot move there, or you have selected no piece."
 
                 player_move(turn)
 
@@ -1146,7 +1146,7 @@ module Chess
                 _________________________________
                 | #{b1} | #{b2} | #{b3} | #{b4} | #{b5} | #{b6} | #{b7} | #{b8} |
                 _________________________________
-                | #{a1} | #{b2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
+                | #{a1} | #{a2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
                 ---------------------------------
             
             "
@@ -1156,6 +1156,6 @@ module Chess
 
 end
 
-# game = Chess::Board.new
+game = Chess::Board.new
 
-# game.play_game
+game.play_game

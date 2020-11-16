@@ -571,6 +571,98 @@ describe Chess do
 
             end
 
+            it "Moves pieces in order and decides check at right moment" do
+
+                io = StringIO.new
+
+                io.puts "e2"
+
+                io.puts "e3"
+
+                io.puts "d7"
+
+                io.puts "d6"
+
+                io.puts "e3"
+
+                io.puts "e4"
+
+                io.puts "e8"
+
+                io.puts "b5"
+
+                io.puts "f2"
+
+                io.puts "f3"
+
+                io.rewind
+
+                $stdin = io
+
+                game = Chess::Board.new
+
+                result = game.player_move(0)
+
+                expect { print "It is your turn White"}.to output.to_stdout
+
+                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+                gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
+
+                gets
+
+                expect { print "It is your turn Black"}.to output.to_stdout
+
+                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+                gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
+
+                gets
+
+                expect { print "It is your turn White"}.to output.to_stdout
+
+                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+                gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
+
+                gets
+
+                expect { print "It is your turn Black"}.to output.to_stdout
+
+                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+                gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
+
+                gets
+
+                expect { print "It is your turn White"}.to output.to_stdout
+
+                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
+
+                gets
+
+                expect { print "where would you like to move to?" }.to output.to_stdout
+
+                gets
+
+                game.display_board()
+
+                game.check(game.white_king, /Black/, 0)
+
+                expect(game.white_check).to eq
+
+                $stdin = STDIN
+
+            end
+
         end
 
         describe "#check" do
@@ -598,13 +690,17 @@ describe Chess do
 
                 game.board[[4,1]] = nil
 
-                game.board[[4,2]] = ["Black Queen", "\u265B"]
+                game.board[[1,4]] = ["Black Queen", "\u265B"]
 
-                # game.display_board
+                game.board[[5,2]] = game.board[[5,1]]
+                
+                game.board[[5,1]] = nil
+
+                game.display_board
 
                 game.check(game.white_king, /Black/, 0)
 
-                expect(game.white_check).to eq(true)
+                expect(game.white_check).to eq(false)
 
             end
 
