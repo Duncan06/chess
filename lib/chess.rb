@@ -66,7 +66,7 @@ module Chess
 
         end
         
-        def knight_moves(start, last, turn, report=false)
+        def knight_moves(start, last, turn, report=false, checking=false)
 
             possible_moves = Knight.get_moves(start)
 
@@ -78,11 +78,11 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
-        def bishop_moves(start, last, turn, report=false)
+        def bishop_moves(start, last, turn, report=false, checking=false)
 
             possible_moves = Bishop.get_moves(start, @board)
 
@@ -94,11 +94,11 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
-        def rook_moves(start, last, turn, report=false)
+        def rook_moves(start, last, turn, report=false, checking=false)
 
             possible_moves = Rook.get_moves(start, @board)
 
@@ -110,11 +110,11 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
-        def queen_moves(start, last, turn, report=false)
+        def queen_moves(start, last, turn, report=false, checking=false)
 
             valid = check_queen_move(start, last, report)
 
@@ -124,7 +124,7 @@ module Chess
 
             end
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
@@ -164,7 +164,7 @@ module Chess
 
         end
 
-        def king_moves(start, last, turn, report=false)
+        def king_moves(start, last, turn, report=false, checking=false)
 
             possible_moves = King.get_moves(start)
 
@@ -176,11 +176,11 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
-        def pawn_moves(start, last, turn, report=false)
+        def pawn_moves(start, last, turn, report=false, checking=false)
 
             possible_moves = Pawn.get_moves(@board, start, turn)
 
@@ -192,7 +192,7 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            check_capture_or_move(start, last, turn, valid)
+            check_capture_or_move(start, last, turn, valid, checking)
 
         end
 
@@ -330,6 +330,8 @@ module Chess
 
             if legal != false
 
+                p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
+
                 if current_player == "White" && @white_check == true
 
                     board_copy = @board
@@ -337,6 +339,8 @@ module Chess
                     capture_piece?(start, last, turn)
 
                     current = check(@white_king, /Black/, turn)
+
+                    p "Current check state #{current}"
 
                     if !current
 
@@ -434,13 +438,15 @@ module Chess
 
                     capture_piece?(start, last, turn)
 
+                    p "King before check #{king} #{@board[king]}"
+
                     check(king, color, turn)
 
                 end
 
             else
 
-                puts "This piece cannot move there, or you have selected no piece."
+                puts "This piece cannot move there, or you have selected no piece, or the wrong color."
 
                 player_move(turn)
 
@@ -450,7 +456,7 @@ module Chess
 
         end
 
-        def check_move_type(start, last, turn, report=false)
+        def check_move_type(start, last, turn, report=false, checking=false)
 
             name = @board[start][0] rescue nil
 
@@ -464,51 +470,51 @@ module Chess
 
             when "White Knight" 
 
-                knight_moves(start, last, turn, report)
+                knight_moves(start, last, turn, report, checking)
 
             when "Black Knight"
 
-                knight_moves(start, last, turn, report)
+                knight_moves(start, last, turn, report, checking)
 
             when "White Bishop" 
 
-                bishop_moves(start, last, turn, report)
+                bishop_moves(start, last, turn, report, checking)
 
             when "Black Bishop"
 
-                bishop_moves(start, last, turn, report)
+                bishop_moves(start, last, turn, report, checking)
 
             when "White Rook" 
 
-                rook_moves(start, last, turn, report)
+                rook_moves(start, last, turn, report, checking)
 
             when "Black Rook"
 
-                rook_moves(start, last, turn, report)
+                rook_moves(start, last, turn, report, checking)
 
             when "White King" 
 
-                king_moves(start, last, turn, report)
+                king_moves(start, last, turn, report, checking)
 
             when "Black King"
 
-                king_moves(start, last, turn, report)
+                king_moves(start, last, turn, report, checking)
 
             when "White Queen" 
 
-                queen_moves(start, last, turn, report)
+                queen_moves(start, last, turn, report, checking)
 
             when "Black Queen" 
 
-                queen_moves(start, last, turn, report)
+                queen_moves(start, last, turn, report, checking)
 
             when "White Pawn" 
 
-                pawn_moves(start, last, turn, report)
+                pawn_moves(start, last, turn, report, checking)
 
             when "Black Pawn"
 
-                pawn_moves(start, last, turn, report)
+                pawn_moves(start, last, turn, report, checking)
 
             else
 
@@ -524,7 +530,9 @@ module Chess
                 
                 if turn % 2 == 0
 
-                    if start[0] == "White King"
+                    if @board[start][0] == "White King"
+
+                        p "Came in white king, start #{start}"
 
                         @white_king = last
 
@@ -532,7 +540,7 @@ module Chess
 
                     if @board[last][0].match(/Black/)
 
-                        p "#{@board[last][1]} #{board[last][0]} captured by white"
+                        p "#{@board[last][1]} #{@board[last][0]} captured by white"
 
                         piece = @board[start]
 
@@ -546,13 +554,15 @@ module Chess
 
                     if @board[last][0].match(/White/)
 
-                        if start[0] == "Black King"
+                        if @board[start][0] == "Black King"
+
+                            p "Came in black king, start #{start}"
 
                             @black_king = last
 
                         end
 
-                        p "#{@board[last][1]} #{board[last][0]} captured by black"
+                        p "#{@board[last][1]} #{@board[last][0]} captured by black"
 
                         piece = @board[start]
 
@@ -566,9 +576,17 @@ module Chess
 
             else
 
-                if start[0] == "White King" || "Black King"
+                if @board[start][0] == "White King"
 
-                    start[0] == "White King" ? @white_king = last : @black_king = last
+                    p "Came in else, start #{start}, #{@board[start][0]}"
+
+                    @white_king = last
+
+                elsif @board[start][0] == "Black King"
+
+                    p "came in else for black"
+
+                    @black_king = last
 
                 end
 
@@ -582,39 +600,45 @@ module Chess
 
         end
 
-        def screen_capture_piece?(start, last, turn)
+        def screen_capture_piece?(start, last, turn, checking=false)
 
             if @board[last] != nil
-                
-                if turn % 2 == 0
 
-                    if @board[last][0].match(/Black/)
+                p "this is last #{@board[[last]]} and this is start #{@board[[start]]}"
+                
+                if (turn % 2) == 0
+
+                    if @board[last][0].match(/Black/) && !@board[start][0].match(/Black/)
+
+                        true
+
+                    elsif @board[last][0].match(/Black/) && checking
 
                         true
 
                     else
 
-                        if !@white_check
+                        p "got to false in screen"
 
-                            p "Cannot move here."
-
-                        end
+                        false
 
                     end
 
                 else
 
-                    if @board[last][0].match(/White/)
+                    if @board[last][0].match(/White/) && !@board[start][0].match(/White/)
+
+                        true
+
+                    elsif @board[last][0].match(/White/) && checking
 
                         true
 
                     else
 
-                        if !@black_check
+                        p "get false in screen, #{checking} checking"
 
-                            p "Cannot move here."
-
-                        end
+                        false
 
                     end
 
@@ -622,19 +646,45 @@ module Chess
 
             else
 
-                true
+                if turn % 2 == 0 && @board[start][0].match(/White/)
+
+                    p "Under else in scrren"
+
+                    true
+
+                elsif turn % 2 == 1 && @board[start][0].match(/Black/)
+
+                    p "under else in screen"
+
+                    true
+
+                else
+
+                    p "recieved false"
+
+                    false
+
+                end
 
             end
 
         end
 
-        def check_capture_or_move(start, last, turn, valid)
+        def check_capture_or_move(start, last, turn, valid, checking=false)
 
             if valid == true
 
-                screen_capture_piece?(start, last, turn)
+                screen = screen_capture_piece?(start, last, turn, checking)
 
-                valid
+                if screen
+
+                    valid
+
+                else
+
+                    screen
+
+                end
 
             else
 
@@ -645,6 +695,8 @@ module Chess
         end
 
         def check(king, color, turn)
+
+            p "Inside check"
 
             first = 0
 
@@ -658,13 +710,19 @@ module Chess
 
                         if @board[[first, second]][0].match(color)
 
-                            legal = check_move_type([first, second], king, (turn % 2) + 1)
+                            legal = check_move_type([first, second], king, (turn % 2) + 1, false, true)
+
+                            p "#{legal} current legal to confirm check, turn is #{(turn + 1) % 2}, color #{color}, first second #{@board[[first, second]]}"
 
                             if legal
 
-                                turn % 2 == 0 ? @white_check = true : @black_check = true
+                                p "This is legal check #{first}  #{second} #{@board[[first, second]]} to #{king} and the turn is #{(turn % 2)}. This is color #{color}"
 
-                                if turn % 2 == 0 
+                                if (turn % 2) == 0 
+
+                                    p "here in white check"
+
+                                    @white_check = true
 
                                     if !@black_checking_white.include? [first, second]
                                     
@@ -675,6 +733,10 @@ module Chess
                                     end
 
                                 else
+
+                                    p "here black check"
+
+                                    @black_check = true
 
                                     if !@white_checking_black.include? [first, second]
                                     
