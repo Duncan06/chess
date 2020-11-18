@@ -65,7 +65,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.bishop_moves([0, 2], [1, 3], 0)
+            game.board[[3,3]] = ["White Bishop", "\u2657"]
+
+            result = game.bishop_moves([3, 3], [4, 4], 0)
 
             expect(result).to eq(true)
 
@@ -89,7 +91,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.rook_moves([0, 0], [1, 0], 0)
+            game.board[[3,3]] = ["White Rook", "\u2656"]
+
+            result = game.rook_moves([3, 3], [5, 3], 0)
 
             expect(result).to eq(true)
 
@@ -113,7 +117,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.queen_moves([0, 0], [1, 0], 0)
+            game.board[[3,3]] = ["White Queen", "\u2655"]
+
+            result = game.queen_moves([3, 3], [3, 5], 0)
 
             expect(result).to eq(true)
 
@@ -123,7 +129,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.queen_moves([0, 3], [2, 5], 0)
+            game.board[[1, 1]] = ["White Queen", "\u2655"]
+
+            result = game.queen_moves([1, 1], [5, 5], 0)
 
             expect(result).to eq(true)
 
@@ -147,7 +155,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.king_moves([0, 4], [1, 4], 0)
+            game.board[[2, 2]] = ["White King", "\u2654"]
+
+            result = game.king_moves([2, 2], [2, 3], 0)
 
             expect(result).to eq(true)
 
@@ -157,7 +167,9 @@ describe Chess do
 
             game = Chess::Board.new
 
-            result = game.king_moves([0, 4], [1, 5], 0)
+            game.board[[2, 2]] = ["White King", "\u2654"]
+
+            result = game.king_moves([2, 2], [3, 3], 0)
 
             expect(result).to eq(true)
 
@@ -566,98 +578,6 @@ describe Chess do
                     [0, 0] => ["White Rook", "\u2656"], [1, 0] => ["White Knight", "\u2658"], [2, 0] => ["White Bishop", "\u2657"], [3, 0] => ["White Queen", "\u2655"], [4, 0] => ["White King", "\u2654"], [5, 0] => ["White Bishop", "\u2657"], [6, 0] => ["White Knight", "\u2658"], [7, 0] => ["White Rook", "\u2656"]
 
                 }) 
-
-                $stdin = STDIN
-
-            end
-
-            it "Moves pieces in order and decides check at right moment" do
-
-                io = StringIO.new
-
-                io.puts "e2"
-
-                io.puts "e3"
-
-                io.puts "d7"
-
-                io.puts "d6"
-
-                io.puts "e3"
-
-                io.puts "e4"
-
-                io.puts "e8"
-
-                io.puts "b5"
-
-                io.puts "f2"
-
-                io.puts "f3"
-
-                io.rewind
-
-                $stdin = io
-
-                game = Chess::Board.new
-
-                result = game.player_move(0)
-
-                expect { print "It is your turn White"}.to output.to_stdout
-
-                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
-
-                gets
-
-                expect { print "where would you like to move to?" }.to output.to_stdout
-
-                gets
-
-                expect { print "It is your turn Black"}.to output.to_stdout
-
-                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
-
-                gets
-
-                expect { print "where would you like to move to?" }.to output.to_stdout
-
-                gets
-
-                expect { print "It is your turn White"}.to output.to_stdout
-
-                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
-
-                gets
-
-                expect { print "where would you like to move to?" }.to output.to_stdout
-
-                gets
-
-                expect { print "It is your turn Black"}.to output.to_stdout
-
-                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
-
-                gets
-
-                expect { print "where would you like to move to?" }.to output.to_stdout
-
-                gets
-
-                expect { print "It is your turn White"}.to output.to_stdout
-
-                expect { print "Please enter a square to select in the format C4" }.to output.to_stdout
-
-                gets
-
-                expect { print "where would you like to move to?" }.to output.to_stdout
-
-                gets
-
-                game.display_board()
-
-                game.check(game.white_king, /Black/, 0)
-
-                expect(game.white_check).to eq
 
                 $stdin = STDIN
 

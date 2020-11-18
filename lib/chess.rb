@@ -1218,6 +1218,6 @@ module Chess
 
 end
 
-game = Chess::Board.new
+# game = Chess::Board.new
 
-game.play_game
+# game.play_game
