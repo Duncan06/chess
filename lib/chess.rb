@@ -246,7 +246,7 @@ module Chess
 
             puts "It is your turn #{current_player}"
 
-            puts "Please enter a square to select in the format C4"
+            puts "Please enter a square to select in the format c4"
 
             start = player_select()
 
@@ -532,7 +532,7 @@ module Chess
 
                     if @board[start][0] == "White King"
 
-                        p "Came in white king, start #{start}"
+                        # p "Came in white king, start #{start}"
 
                         @white_king = last
 
@@ -556,7 +556,7 @@ module Chess
 
                         if @board[start][0] == "Black King"
 
-                            p "Came in black king, start #{start}"
+                            # p "Came in black king, start #{start}"
 
                             @black_king = last
 
@@ -578,13 +578,13 @@ module Chess
 
                 if @board[start][0] == "White King"
 
-                    p "Came in else, start #{start}, #{@board[start][0]}"
+                    # p "Came in else, start #{start}, #{@board[start][0]}"
 
                     @white_king = last
 
                 elsif @board[start][0] == "Black King"
 
-                    p "came in else for black"
+                    # p "came in else for black"
 
                     @black_king = last
 
@@ -600,25 +600,25 @@ module Chess
 
         end
 
-        def screen_capture_piece?(start, last, turn, checking=false)
+        def screen_capture_piece?(start, last, color, checking=false)
 
             if @board[last] != nil
 
-                p "this is last #{@board[[last]]} and this is start #{@board[[start]]}"
+                # p "this is last #{@board[[last]]} and this is start #{@board[[start]]}"
                 
-                if (turn % 2) == 0
+                if color == /White/
 
                     if @board[last][0].match(/Black/) && !@board[start][0].match(/Black/)
 
                         true
 
-                    elsif @board[last][0].match(/Black/) && checking
+                    elsif @board[last][0].match(/White/) && checking
 
                         true
 
                     else
 
-                        p "got to false in screen"
+                        # p "got to false in screen"
 
                         false
 
@@ -630,13 +630,13 @@ module Chess
 
                         true
 
-                    elsif @board[last][0].match(/White/) && checking
+                    elsif @board[last][0].match(/Black/) && checking
 
                         true
 
                     else
 
-                        p "get false in screen, #{checking} checking"
+                        # p "get false in screen, #{checking} checking"
 
                         false
 
@@ -646,21 +646,21 @@ module Chess
 
             else
 
-                if turn % 2 == 0 && @board[start][0].match(/White/)
+                if color == /White/ && @board[start][0].match(/White/)
 
-                    p "Under else in scrren"
+                    # p "Under else in scrren"
 
                     true
 
-                elsif turn % 2 == 1 && @board[start][0].match(/Black/)
+                elsif color == /Black/ && @board[start][0].match(/Black/)
 
-                    p "under else in screen"
+                    # p "under else in screen"
 
                     true
 
                 else
 
-                    p "recieved false"
+                    # p "recieved false"
 
                     false
 
@@ -672,9 +672,11 @@ module Chess
 
         def check_capture_or_move(start, last, turn, valid, checking=false)
 
+            turn % 2 == 0 ? color = /White/ : color = /Black/
+
             if valid == true
 
-                screen = screen_capture_piece?(start, last, turn, checking)
+                screen = screen_capture_piece?(start, last, color, checking)
 
                 if screen
 
@@ -696,7 +698,7 @@ module Chess
 
         def check(king, color, turn)
 
-            p "Inside check"
+            # p "Inside check"
 
             first = 0
 
@@ -710,17 +712,17 @@ module Chess
 
                         if @board[[first, second]][0].match(color)
 
-                            legal = check_move_type([first, second], king, (turn % 2) + 1, false, true)
+                            legal = check_move_type([first, second], king, ((turn + 1) % 2) , false, true)
 
-                            p "#{legal} current legal to confirm check, turn is #{(turn + 1) % 2}, color #{color}, first second #{@board[[first, second]]}"
+                            # p "#{legal} current legal to confirm check, turn is #{(turn + 1) % 2}, color #{color}, first second #{@board[[first, second]]}"
 
                             if legal
 
-                                p "This is legal check #{first}  #{second} #{@board[[first, second]]} to #{king} and the turn is #{(turn % 2)}. This is color #{color}"
+                                # p "This is legal check #{first}  #{second} #{@board[[first, second]]} #{first} #{second} to #{king} and the turn is #{(turn % 2) + 1}. This is color #{color}"
 
-                                if (turn % 2) == 0 
+                                if ((turn +1 )% 2) == 0 
 
-                                    p "here in white check"
+                                    # p "here in white check"
 
                                     @white_check = true
 
@@ -1026,6 +1028,12 @@ module Chess
 
                             current_piece_moves = check_move_type([first, second], king, turn, true)
 
+                            if current_piece_moves == false
+
+                                return
+
+                            end
+
                             current_piece_moves.each do |block|
 
                                 # p "This is current block #{block} and is #{board[block]}"
@@ -1193,23 +1201,25 @@ module Chess
             h8 = @board[[7, 7]].nil? ? " " : @board[[7, 7]][1].encode('utf-8')
             
             puts "
-                _________________________________
-                | #{h1} | #{h2} | #{h3} | #{h4} | #{h5} | #{h6} | #{h7} | #{h8} |
-                _________________________________
-                | #{g1} | #{g2} | #{g3} | #{g4} | #{g5} | #{g6} | #{g7} | #{g8} |
-                _________________________________
-                | #{f1} | #{f2} | #{f3} | #{f4} | #{f5} | #{f6} | #{f7} | #{f8} |
-                _________________________________
-                | #{e1} | #{e2} | #{e3} | #{e4} | #{e5} | #{e6} | #{e7} | #{e8} |
-                _________________________________
-                | #{d1} | #{d2} | #{d3} | #{d4} | #{d5} | #{d6} | #{d7} | #{d8} |
-                _________________________________
-                | #{c1} | #{c2} | #{c3} | #{c4} | #{c5} | #{c6} | #{c7} | #{c8} |
-                _________________________________
-                | #{b1} | #{b2} | #{b3} | #{b4} | #{b5} | #{b6} | #{b7} | #{b8} |
-                _________________________________
-                | #{a1} | #{a2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
-                ---------------------------------
+                 _________________________________
+             8   | #{h1} | #{h2} | #{h3} | #{h4} | #{h5} | #{h6} | #{h7} | #{h8} |
+                 _________________________________
+             7   | #{g1} | #{g2} | #{g3} | #{g4} | #{g5} | #{g6} | #{g7} | #{g8} |
+                 _________________________________
+             6   | #{f1} | #{f2} | #{f3} | #{f4} | #{f5} | #{f6} | #{f7} | #{f8} |
+                 _________________________________
+             5   | #{e1} | #{e2} | #{e3} | #{e4} | #{e5} | #{e6} | #{e7} | #{e8} |
+                 _________________________________
+             4   | #{d1} | #{d2} | #{d3} | #{d4} | #{d5} | #{d6} | #{d7} | #{d8} |
+                 _________________________________
+             3   | #{c1} | #{c2} | #{c3} | #{c4} | #{c5} | #{c6} | #{c7} | #{c8} |
+                 _________________________________
+             2   | #{b1} | #{b2} | #{b3} | #{b4} | #{b5} | #{b6} | #{b7} | #{b8} |
+                 _________________________________
+             1   | #{a1} | #{a2} | #{a3} | #{a4} | #{a5} | #{a6} | #{a7} | #{a8} |
+                 ---------------------------------
+
+                   a   b   c   d   e   f   g   h
             
             "
         end
@@ -1218,6 +1228,6 @@ module Chess
 
 end
 
-# game = Chess::Board.new
+game = Chess::Board.new
 
-# game.play_game
+game.play_game

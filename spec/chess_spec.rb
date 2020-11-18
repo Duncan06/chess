@@ -605,7 +605,6 @@ describe Chess do
 
             it "decides with queen correctly" do 
 
-
                 game = Chess::Board.new
 
                 game.board[[4,1]] = nil
