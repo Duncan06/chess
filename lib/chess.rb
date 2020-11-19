@@ -36,7 +36,7 @@ module Chess
                     
                         "a1" => [0, 0], "b1" => [1, 0], "c1" => [2, 0], "d1" => [3, 0], "e1" => [4, 0], "f1" => [5, 0], "g1" => [6, 0], "h1" => [7, 0],
 
-                        "a2" => [0, 1], "b2" => [1, 1], "c2" => [2, 1], "d2" => [3, 1], "e2" => [4, 1], "f2" => [5, 1], "g2" => [6, 1]," h2" => [7, 1],
+                        "a2" => [0, 1], "b2" => [1, 1], "c2" => [2, 1], "d2" => [3, 1], "e2" => [4, 1], "f2" => [5, 1], "g2" => [6, 1], "h2" => [7, 1],
 
                         "a3" => [0, 2], "b3" => [1, 2], "c3" => [2, 2], "d3" => [3, 2], "e3" => [4, 2], "f3" => [5, 2], "g3" => [6, 2], "h3" => [7, 2],
                         
@@ -360,7 +360,7 @@ module Chess
 
                             puts "You must move yourself out of check"
 
-                            @board = board_copy
+                            @board = board_copy.clone
 
                             start, last = player_response(current_player)
 
@@ -412,7 +412,7 @@ module Chess
 
                             puts "You must move yourself out of check"
 
-                            @board = board_copy
+                            @board = board_copy.clone
 
                             start, last = player_response(current_player)
 
@@ -470,6 +470,16 @@ module Chess
 
                         checked = true
 
+                        if @black_check == true
+
+                            @black_check = false
+
+                        else
+
+                            @white_check = true
+
+                        end
+
                     end
 
                     while checked
@@ -507,6 +517,7 @@ module Chess
                                     checked = false
 
                                 end
+                                
                             end
                                         
                         else
