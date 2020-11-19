@@ -330,9 +330,11 @@ module Chess
 
             if legal != false
 
-                p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
+                # p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
 
                 if current_player == "White" && @white_check == true
+
+                    @black_check = false
 
                     board_copy = @board
 
@@ -340,7 +342,7 @@ module Chess
 
                     current = check(@white_king, /Black/, turn)
 
-                    p "Current check state #{current}"
+                    # p "Current check state #{current}"
 
                     if !current
 
@@ -386,6 +388,8 @@ module Chess
 
                 elsif current_player == "Black" && @black_check == true
 
+                    @white_check = false
+
                     board_copy = @board
 
                     capture_piece?(start, last, turn)
@@ -398,9 +402,9 @@ module Chess
 
                     end
 
-                    if @blacke_check == true
+                    if @black_check == true
 
-                        until !@black_check do
+                        while @black_check do
 
                             puts "You must move yourself out of check"
 
@@ -436,11 +440,67 @@ module Chess
 
                 else
 
+                    board_copy = @board
+
                     capture_piece?(start, last, turn)
 
-                    p "King before check #{king} #{@board[king]}"
+                    # p "King before check #{king} #{@board[king]}"
 
                     check(king, color, turn)
+
+                    p "here after check"
+
+                    if @black_check == true || @white_check == true
+
+                        p "set checked to true"
+
+                        checked = true
+
+                    end
+
+                    while checked
+
+                        p "You can't put yourself in check."
+
+                        @board = board_copy
+
+                        start, last = player_response(current_player)
+
+                        legal = check_move_type(start, last, turn)
+
+                        if legal != false
+
+                            capture_piece?(start, last, turn)
+
+                            current = check(king, color, turn)
+
+                            if !current 
+
+                                if @black_check == true
+
+                                    @black_check = false
+
+                                    checked = false
+
+                                else
+
+                                    @white_check = false
+
+                                    checked = false
+
+                                end
+        
+                            end
+                                        
+                        else
+
+                            "This piece cannot move there."
+
+                            player_move(turn)
+
+                        end
+
+                    end
 
                 end
 
@@ -712,15 +772,15 @@ module Chess
 
                         if @board[[first, second]][0].match(color)
 
-                            legal = check_move_type([first, second], king, ((turn + 1) % 2) , false, true)
+                            legal = check_move_type([first, second], king, (turn % 2) , false, true)
 
-                            # p "#{legal} current legal to confirm check, turn is #{(turn + 1) % 2}, color #{color}, first second #{@board[[first, second]]}"
+                            # p "#{legal} current legal to confirm check, turn is #{(turn + 1)}, color #{color}, first second #{@board[[first, second]]}"
 
                             if legal
 
-                                # p "This is legal check #{first}  #{second} #{@board[[first, second]]} #{first} #{second} to #{king} and the turn is #{(turn % 2) + 1}. This is color #{color}"
+                                # p "This is legal check #{first}  #{second} #{@board[[first, second]]} #{first} #{second} to #{king} and the turn is #{(turn % 2)}. This is color #{color}"
 
-                                if ((turn +1 )% 2) == 0 
+                                if color == /Black/
 
                                     # p "here in white check"
 
@@ -736,7 +796,7 @@ module Chess
 
                                 else
 
-                                    p "here black check"
+                                    # p "here black check"
 
                                     @black_check = true
 
@@ -960,7 +1020,29 @@ module Chess
 
             moves = []
 
-            if color == "White"
+            if color == /White/
+
+                black_checks = @black_checking_white
+
+                black_checks.each do |piece|
+
+                    moves << check_move_type(piece, king, turn, true)
+
+                rescue nil
+
+                    if nil
+
+                        return
+
+                    end
+
+                end
+
+                # p "moves after getting white checks #{moves}"
+
+                eval_blocks(king, color, turn, board, moves)
+
+            else
 
                 white_checks = @white_checking_black
 
@@ -979,20 +1061,6 @@ module Chess
                 end
 
                 # p "moves after getting black checks #{moves}"
-
-                eval_blocks(king, color, turn, board, moves)
-
-            else
-
-                black_checks = @black_checking_white
-
-                black_checks.each do |piece|
-
-                    moves << check_move_type(piece, king, turn, true)
-
-                end
-
-                p "moves after getting white checks #{moves}"
 
                 eval_blocks(king, color, turn, board, moves)
 
@@ -1042,11 +1110,11 @@ module Chess
 
                                     if scan == pieces_eval
 
-                                        # p "scan == pieces_eval"
+                                        p "scan == pieces_eval"
 
                                         # p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
 
-                                        # p "This is value of board square #{board[[first, second]][0]}"
+                                        p "This is value of board square #{board[[first, second]][0]}"
 
                                         if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
 
@@ -1088,7 +1156,7 @@ module Chess
 
                                     end
 
-                                    # p "This is possible_block value #{possible_block}"
+                                    p "This is possible_block value #{possible_block}"
 
                                     if possible_block
 
