@@ -290,6 +290,8 @@ module Chess
 
                     puts "White is in check."
 
+                    display_board
+
                 end
 
             elsif @black_check == true 
@@ -305,6 +307,8 @@ module Chess
                 else
 
                     puts "Black is in check."
+
+                    display_board
 
                 end
 
@@ -330,13 +334,11 @@ module Chess
 
             if legal != false
 
-                # p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
+                p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
 
                 if current_player == "White" && @white_check == true
 
-                    @black_check = false
-
-                    board_copy = @board
+                    board_copy = @board.clone
 
                     capture_piece?(start, last, turn)
 
@@ -353,6 +355,8 @@ module Chess
                     if @white_check == true
 
                         while @white_check do
+
+                            @black_check = false
 
                             puts "You must move yourself out of check"
 
@@ -388,9 +392,7 @@ module Chess
 
                 elsif current_player == "Black" && @black_check == true
 
-                    @white_check = false
-
-                    board_copy = @board
+                    board_copy = @board.clone
 
                     capture_piece?(start, last, turn)
 
@@ -405,6 +407,8 @@ module Chess
                     if @black_check == true
 
                         while @black_check do
+
+                            @white_check = false
 
                             puts "You must move yourself out of check"
 
@@ -440,17 +444,27 @@ module Chess
 
                 else
 
-                    board_copy = @board
+                    board_copy = @board.clone
 
                     capture_piece?(start, last, turn)
 
                     # p "King before check #{king} #{@board[king]}"
 
+                    if color == /Black/
+
+                        king, color = @black_king, /White/
+
+                    else
+
+                        king, color = @white_king, /Black/
+
+                    end
+
                     check(king, color, turn)
 
-                    p "here after check"
+                    p "here after check, #{@black_check} black check, #{@white_check} white check, #{current_player} currenty player, #{color} color"
 
-                    if @black_check == true || @white_check == true
+                    if (@black_check == true && current_player == "Black") || (@white_check == true && current_player == "White")
 
                         p "set checked to true"
 
@@ -462,7 +476,9 @@ module Chess
 
                         p "You can't put yourself in check."
 
-                        @board = board_copy
+                        @board = board_copy.clone
+
+                        display_board
 
                         start, last = player_response(current_player)
 
@@ -474,6 +490,8 @@ module Chess
 
                             current = check(king, color, turn)
 
+                            p "#{current} current from checked"
+
                             if !current 
 
                                 if @black_check == true
@@ -482,14 +500,13 @@ module Chess
 
                                     checked = false
 
-                                else
+                                elsif @white_check == true
 
                                     @white_check = false
 
                                     checked = false
 
                                 end
-        
                             end
                                         
                         else
@@ -782,31 +799,23 @@ module Chess
 
                                 if color == /Black/
 
-                                    # p "here in white check"
+                                    p "here in white check"
 
                                     @white_check = true
-
-                                    if !@black_checking_white.include? [first, second]
                                     
-                                        @black_checking_white << [first, second]
+                                    @black_checking_white << [first, second]
 
-                                        return true
-
-                                    end
+                                    return true
 
                                 else
 
-                                    # p "here black check"
+                                    p "here black check"
 
                                     @black_check = true
-
-                                    if !@white_checking_black.include? [first, second]
                                     
-                                        @white_checking_black << [first, second]
+                                    @white_checking_black << [first, second]
 
-                                        return true
-
-                                    end
+                                    return true
 
                                 end
 
