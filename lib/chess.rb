@@ -214,8 +214,6 @@ module Chess
 
         end
 
-
-
         def player_select()
 
             answer = (gets.chomp) rescue nil
@@ -450,17 +448,9 @@ module Chess
 
                     # p "King before check #{king} #{@board[king]}"
 
-                    if color == /Black/
+                    check(@black_king, /White/, turn)
 
-                        king, color = @black_king, /White/
-
-                    else
-
-                        king, color = @white_king, /Black/
-
-                    end
-
-                    check(king, color, turn)
+                    check(@white_king, /Black/, turn)
 
                     p "here after check, #{@black_check} black check, #{@white_check} white check, #{current_player} currenty player, #{color} color"
 
@@ -488,11 +478,15 @@ module Chess
 
                         @board = board_copy.clone
 
+                        p "Set board to clone"
+
                         display_board
 
                         start, last = player_response(current_player)
 
                         legal = check_move_type(start, last, turn)
+
+                        p "This is the state of the current move #{legal}"
 
                         if legal != false
 
@@ -504,15 +498,19 @@ module Chess
 
                             if !current 
 
+                                p "#{@black_check} black check, #{@white_check} white check"
+
                                 if @black_check == true
 
-                                    @black_check = false
+                                    check(@black_king, /White/, turn)
 
                                     checked = false
 
                                 elsif @white_check == true
 
-                                    @white_check = false
+                                    check(@white_king, /Black/, turn)
+
+                                    @black_check = false
 
                                     checked = false
 
@@ -818,7 +816,7 @@ module Chess
 
                                     return true
 
-                                else
+                                elsif color == /White/ && @white_check == false
 
                                     p "here black check"
 
