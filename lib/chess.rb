@@ -474,57 +474,7 @@ module Chess
 
                     while checked
 
-                        p "You can't put yourself in check."
-
-                        @board = board_copy.clone
-
-                        p "Set board to clone"
-
-                        display_board
-
-                        start, last = player_response(current_player)
-
-                        legal = check_move_type(start, last, turn)
-
-                        p "This is the state of the current move #{legal}"
-
-                        if legal != false
-
-                            capture_piece?(start, last, turn)
-
-                            current = check(king, color, turn)
-
-                            p "#{current} current from checked"
-
-                            if !current 
-
-                                p "#{@black_check} black check, #{@white_check} white check"
-
-                                if @black_check == true
-
-                                    check(@black_king, /White/, turn)
-
-                                    checked = false
-
-                                elsif @white_check == true
-
-                                    check(@white_king, /Black/, turn)
-
-                                    @black_check = false
-
-                                    checked = false
-
-                                end
-                                
-                            end
-                                        
-                        else
-
-                            "This piece cannot move there."
-
-                            player_move(turn)
-
-                        end
+                        checked = player_self_check(start, last, turn, color, king, current_player, board_copy)
 
                     end
 
@@ -1209,6 +1159,66 @@ module Chess
             end
 
             false
+
+        end
+
+        def player_self_check(start, last, turn, color, king, current_player, board_copy)
+
+            p "You can't put yourself in check."
+
+            @board = board_copy.clone
+
+            p "Set board to clone"
+
+            display_board
+
+            start, last = player_response(current_player)
+
+            legal = check_move_type(start, last, turn)
+
+            p "This is the state of the current move #{legal}"
+
+            if legal != false
+
+                capture_piece?(start, last, turn)
+
+                current = check(king, color, turn)
+
+                p "#{current} current from checked"
+
+                if !current 
+
+                    p "#{@black_check} black check, #{@white_check} white check"
+
+                    if @black_check == true
+
+                        check(@black_king, /White/, turn)
+
+                        false
+
+                    elsif @white_check == true
+
+                        check(@white_king, /Black/, turn)
+
+                        @black_check = false
+
+                        false
+
+                    end
+
+                else 
+
+                    true
+                    
+                end
+                            
+            else
+
+                "This piece cannot move there."
+
+                player_move(turn)
+
+            end
 
         end
 
