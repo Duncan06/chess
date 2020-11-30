@@ -64,6 +64,18 @@ module Chess
 
             @white_checking_black = []
 
+            @white_king_moved = false
+
+            @black_king_moved = false
+
+            @white_left_rook_moved = false
+
+            @white_right_rook_moved = false
+
+            @black_left_rook_moved = false
+
+            @black_right_rook_moved = false
+
         end
         
         def knight_moves(start, last, turn, report=false, checking=false)
