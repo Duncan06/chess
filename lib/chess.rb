@@ -288,7 +288,6 @@ module Chess
 
                     puts "White is in check."
 
-                    display_board
 
                 end
 
@@ -305,8 +304,6 @@ module Chess
                 else
 
                     puts "Black is in check."
-
-                    display_board
 
                 end
 
@@ -464,9 +461,9 @@ module Chess
 
                             @black_check = false
 
-                        else
+                        elsif @white_check == true 
 
-                            @white_check = true
+                            @white_check = false
 
                         end
 
@@ -474,7 +471,9 @@ module Chess
 
                     while checked
 
-                        checked = player_self_check(start, last, turn, color, king, current_player, board_copy)
+                        checked = player_self_check(start, last, turn, current_player, board_copy)
+
+                        p "checked #{checked}"
 
                     end
 
@@ -1162,7 +1161,7 @@ module Chess
 
         end
 
-        def player_self_check(start, last, turn, color, king, current_player, board_copy)
+        def player_self_check(start, last, turn, current_player, board_copy)
 
             p "You can't put yourself in check."
 
@@ -1182,9 +1181,15 @@ module Chess
 
                 capture_piece?(start, last, turn)
 
-                current = check(king, color, turn)
+                current = check(@black_king, /White/, turn)
 
-                p "#{current} current from checked"
+                if !current 
+
+                    current = check(@white_king, /Black/, turn)
+
+                end
+
+                p "#{current_player} current player, #{@white_check} white check, #{@black_check} black check"
 
                 if !current 
 
@@ -1194,15 +1199,21 @@ module Chess
 
                         check(@black_king, /White/, turn)
 
+                        @black_check = false
+
                         false
 
                     elsif @white_check == true
 
                         check(@white_king, /Black/, turn)
 
-                        @black_check = false
+                        @white_check = false
 
                         false
+
+                    else 
+
+                        true
 
                     end
 
