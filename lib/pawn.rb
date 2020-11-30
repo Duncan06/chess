@@ -8,7 +8,17 @@ class Pawn
 
         y = current_square[1]
 
+        start_squares_white = [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1]]
+
+        start_squares_black = [[0, 6], [1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [6, 6], [7, 6]]
+
         if turn % 2 == 0
+
+            if start_squares_white.include? current_square
+
+                possible_moves << [x, y+2]
+
+            end
 
             if y + 1 < 7
 
@@ -39,6 +49,12 @@ class Pawn
         end
 
         if turn % 2 == 1
+
+            if start_squares_black.include? current_square
+
+                possible_moves << [x, y-2]
+
+            end
 
             if y - 1 > 0
 
