@@ -122,6 +122,28 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
+            if valid == true
+
+                if start == [0, 0]
+
+                    @white_left_rook_moved = true
+
+                elsif start == [7, 0]
+
+                    @white_right_rook_moved = true
+
+                elsif start == [0, 7] 
+
+                    @black_right_rook_moved = true
+
+                elsif start == [7, 7]
+
+                    @black_left_rook_moved = true
+
+                end
+
+            end
+
             check_capture_or_move(start, last, turn, valid, checking)
 
         end
@@ -186,7 +208,119 @@ module Chess
 
             end
 
+            if start == [4, 0] && last == [6, 0] && @board[[4, 0]] == ["White King", "\u2654"] && @board[[7, 0]] == ["White Rook", "\u2656"]
+
+                if @white_king_moved == false && @white_right_rook_moved == false
+
+                    if @board[[5, 0]] == nil  && @board[[6, 0]] == nil
+
+                        @board[[5, 0]] = ["White Rook", "\u2656"]
+
+                        @board[[6, 0]] = ["White King", "\u2654"]
+
+                        @board[[4, 0]] = nil
+
+                        @board[[7, 0]] = nil
+
+                        @white_king_moved = true
+
+                        @white_right_rook_moved = true
+
+                        return "castle"
+
+                    end
+
+                end
+
+            elsif start == [4, 0] && last == [2, 0] 
+
+                if @white_king_moved == false && @white_right_rook_moved == false && @board[[4, 0]] == ["White King", "\u2654"] && @board[[0, 0]] == ["White Rook", "\u2656"]
+
+                    if @board[[1, 0]] == nil  && @board[[2, 0]] == nil && @board[[3, 0]] == nil
+
+                        @board[[2, 0]] = ["White King", "\u2654"]
+                        
+                        @board[[3, 0]] = ["White Rook", "\u2656"]
+
+                        @board[[4, 0]] = nil
+
+                        @board[[0, 0]] = nil
+
+                        @white_king_moved = true
+
+                        @white_left_rook_moved = true
+
+                        return "castle"
+                        
+                    end
+
+                end
+
+            elsif start == [3, 7] && last == [1, 7]
+
+                if @black_king_moved == false && @black_right_rook_moved == false && @board[[3, 7]] == ["Black King", "\u265A"] && @board[[0, 7]] == ["Black Rook", "\u265C"]
+
+                    if @board[[1, 7]] == nil  && @board[[2, 7]] == nil
+
+                        @board[[1, 7]] = ["Black King", "\u265A"]
+
+                        @board[[2, 7]] = ["Black Rook", "\u265C"]
+
+                        @board[[0, 7]] = nil
+
+                        @board[[3, 7]] = nil
+
+                        @black_king_moved = true
+
+                        @black_right_rook_moved = true
+
+                        return "castle"
+
+                    end
+
+                end
+
+            elsif start == [3, 7] && last == [5, 7]
+
+                if @black_king_moved == false && @black_left_rook_moved == false && @board[[3, 7]] == ["Black King", "\u265A"] && @board[[7, 7]] == ["Black Rook", "\u265C"]
+
+                    if @board[[4, 7]] == nil  && @board[[5, 7]] == nil && @board[[6, 7]] == nil
+
+                        @board[[4, 7]] = ["Black Rook", "\u265C"]
+                        
+                        @board[[5, 7]] = ["Black King", "\u265A"]
+
+                        @board[[3, 7]] = nil
+
+                        @board[[7, 7]] = nil
+
+                        @black_king_moved = true
+
+                        @black_left_rook_moved = true
+
+                        return "castle"
+
+                    end
+
+                end
+
+            end
+
             valid = possible_moves.include?(last) ? true : false
+
+            if valid
+
+                if start == [4, 0]
+
+                    @white_king_moved = true
+
+                elsif start == [3, 7]
+
+                    @black_king_moved = true
+
+                end
+            
+            end
 
             check_capture_or_move(start, last, turn, valid, checking)
 
@@ -338,6 +472,12 @@ module Chess
             start, last = player_response(current_player)
 
             legal = check_move_type(start, last, turn)
+
+            if legal == "castle"
+
+                return
+
+            end
 
             if legal != false
 
