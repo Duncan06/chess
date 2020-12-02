@@ -52,9 +52,9 @@ module Chess
 
                     }
 
-            @black_king = [3,7]
+            @black_king = [3, 7]
 
-            @white_king = [4,0]
+            @white_king = [4, 0]
 
             @black_check = false
 
@@ -75,6 +75,12 @@ module Chess
             @black_left_rook_moved = false
 
             @black_right_rook_moved = false
+
+            @white_pawn_end = [[0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7], [7, 7]]
+
+            @black_pawn_end = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]]
+
+            @piece_selection = ["queen", "rook", "bishop", "knight"]
 
         end
         
@@ -328,6 +334,8 @@ module Chess
 
         def pawn_moves(start, last, turn, report=false, checking=false)
 
+            p "This is last before sent to pawn #{last}"
+
             possible_moves = Pawn.get_moves(@board, start, turn)
 
             if report
@@ -337,6 +345,42 @@ module Chess
             end
 
             valid = possible_moves.include?(last) ? true : false
+
+            # if turn % 2 == 0 && (@white_pawn_end.include? last)
+
+            #     p "This is value of last #{last}"
+
+            #     if @board[last] != nil
+
+            #         p "#{@board[last][1]} #{@board[last][0]} captured by white"
+
+            #     end
+
+            #     piece = @board[start]
+
+            #     @board[last] = piece
+
+            #     @board[start] = nil
+
+            #     return "promotion"
+
+            # elsif turn % 2 == 1 && (@black_pawn_end.include? last)
+
+            #     if @board[last] != nil
+
+            #         p "#{@board[last][1]} #{@board[last][0]} captured by black"
+
+            #     end
+
+            #     piece = @board[start]
+
+            #     @board[last] = piece
+
+            #     @board[start] = nil
+
+            #     return "promotion"
+
+            # end
 
             check_capture_or_move(start, last, turn, valid, checking)
 
@@ -473,7 +517,17 @@ module Chess
 
             legal = check_move_type(start, last, turn)
 
+            p "This is last in player move #{last}"
+
             if legal == "castle"
+
+                return
+
+            end
+
+            if legal == "promotion"
+
+                pawn_promotion(last, turn)
 
                 return
 
@@ -594,6 +648,8 @@ module Chess
                     board_copy = @board.clone
 
                     capture_piece?(start, last, turn)
+
+                    p "last after capture_piece in else #{last}"
 
                     # p "King before check #{king} #{@board[king]}"
 
@@ -1382,6 +1438,118 @@ module Chess
                 player_move(turn)
 
             end
+
+        end
+
+        def pawn_promotion(last, turn)
+
+            answer = promotion_response(last, turn)
+
+            case answer
+
+            when "queen"
+
+                if turn % 2 == 0
+
+                    @board[last] = ["White Queen", "\u2655"]
+
+                else
+
+                    @board[last] = ["Black Queen", "\u265B"]
+
+                end
+
+            when "rook"
+
+                if turn % 2 == 0
+
+                    @board[last] = ["White Rook", "\u2656"]
+
+                else
+
+                    @board[last] = ["Black Rook", "\u265C"]
+
+                end
+
+            when "knight"
+
+                if turn % 2 == 0
+
+                    @board[last] = ["White Knight", "\u2658"]
+
+                else
+
+                    @board[last] = ["Black Knight", "\u265E"]
+
+                end
+
+            when "bishop"
+
+                if turn % 2 == 0
+
+                    @board[last] = ["White Bishop", "\u2657"]
+
+                else
+
+                    @board[last] = ["Black Bishop", "\u265D"]
+
+                end
+
+            end
+
+        end
+
+        def promotion_response(last, turn)
+
+            if turn % 2 == 0
+
+                puts "What piece would you like to promote to white? You may choose Queen, Rook, Bishop, or Knight."
+
+            else 
+
+                puts "What piece would you like to promote to black? You may choose Queen, Rook, Bishop, or Knight." 
+
+            end
+
+            answer = (gets.chomp) rescue nil
+
+            if answer == nil
+
+                p "You must enter a response"
+
+                until answer != nil
+
+                    p "You may choose from Queen, Rook, Bishop, or Knight"
+
+                    answer = gets.chomp
+
+                end
+
+            end
+
+            answer = answer.downcase
+
+            correct = false
+
+            until correct
+
+                if @piece_selection.include? answer
+
+                    correct = true
+
+                else
+
+                    puts "Please provide correct input."
+
+                    answer = gets.chomp
+
+                    answer = answer.downcase
+
+                end
+
+            end
+
+            return answer
 
         end
 
