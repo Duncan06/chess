@@ -334,8 +334,6 @@ module Chess
 
         def pawn_moves(start, last, turn, report=false, checking=false)
 
-            p "This is last before sent to pawn #{last}"
-
             possible_moves = Pawn.get_moves(@board, start, turn)
 
             if report
@@ -346,41 +344,41 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            # if turn % 2 == 0 && (@white_pawn_end.include? last)
+            if valid && turn % 2 == 0 && (@white_pawn_end.include? last)
 
-            #     p "This is value of last #{last}"
+                p "This is value of last #{last}"
 
-            #     if @board[last] != nil
+                if @board[last] != nil
 
-            #         p "#{@board[last][1]} #{@board[last][0]} captured by white"
+                    p "#{@board[last][1]} #{@board[last][0]} captured by white"
 
-            #     end
+                end
 
-            #     piece = @board[start]
+                piece = @board[start]
 
-            #     @board[last] = piece
+                @board[last] = piece
 
-            #     @board[start] = nil
+                @board[start] = nil
 
-            #     return "promotion"
+                return "promotion"
 
-            # elsif turn % 2 == 1 && (@black_pawn_end.include? last)
+            elsif valid && turn % 2 == 1 && (@black_pawn_end.include? last)
 
-            #     if @board[last] != nil
+                if @board[last] != nil
 
-            #         p "#{@board[last][1]} #{@board[last][0]} captured by black"
+                    p "#{@board[last][1]} #{@board[last][0]} captured by black"
 
-            #     end
+                end
 
-            #     piece = @board[start]
+                piece = @board[start]
 
-            #     @board[last] = piece
+                @board[last] = piece
 
-            #     @board[start] = nil
+                @board[start] = nil
 
-            #     return "promotion"
+                return "promotion"
 
-            # end
+            end
 
             check_capture_or_move(start, last, turn, valid, checking)
 
@@ -517,8 +515,6 @@ module Chess
 
             legal = check_move_type(start, last, turn)
 
-            p "This is last in player move #{last}"
-
             if legal == "castle"
 
                 return
@@ -648,8 +644,6 @@ module Chess
                     board_copy = @board.clone
 
                     capture_piece?(start, last, turn)
-
-                    p "last after capture_piece in else #{last}"
 
                     # p "King before check #{king} #{@board[king]}"
 
