@@ -16,7 +16,11 @@ class Pawn
 
             if start_squares_white.include? current_square
 
-                possible_moves << [x, y+2]
+                if board[[x, y+2]].nil?
+
+                    possible_moves << [x, y+2]
+
+                end
 
             end
 
@@ -52,7 +56,11 @@ class Pawn
 
             if start_squares_black.include? current_square
 
-                possible_moves << [x, y-2]
+                if board[[x, y-2]].nil?
+
+                    possible_moves << [x, y-2]
+
+                end
 
             end
 

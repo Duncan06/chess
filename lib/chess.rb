@@ -14,7 +14,7 @@ module Chess
 
             @board = {
 
-                        [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black King", "\u265A"], [4, 7] => ["Black Queen", "\u265B"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
+                        [0, 7] => ["Black Rook", "\u265C"], [1, 7] => ["Black Knight", "\u265E"], [2, 7] => ["Black Bishop", "\u265D"], [3, 7] => ["Black Queen", "\u265B"], [4, 7] => ["Black King", "\u265A"], [5, 7] => ["Black Bishop", "\u265D"], [6, 7] => ["Black Knight", "\u265E"], [7, 7] => ["Black Rook", "\u265C"],
 
                         [0, 6] => ["Black Pawn", "\u265F"], [1, 6] => ["Black Pawn", "\u265F"], [2, 6] => ["Black Pawn", "\u265F"], [3, 6] => ["Black Pawn", "\u265F"], [4, 6] => ["Black Pawn", "\u265F"], [5, 6] => ["Black Pawn", "\u265F"], [6, 6] => ["Black Pawn", "\u265F"], [7, 6] => ["Black Pawn", "\u265F"],
 
@@ -52,7 +52,7 @@ module Chess
 
                     }
 
-            @black_king = [3, 7]
+            @black_king = [4, 7]
 
             @white_king = [4, 0]
 
@@ -482,6 +482,8 @@ module Chess
             elsif @black_check == true 
 
                 possible = get_out_of_check(@black_king, /Black/, turn % 2, @white_checking_black)
+
+                p "possible #{possible}"
 
                 if !possible
 
@@ -1015,7 +1017,9 @@ module Chess
 
             end 
 
-            king_moves_out = safe.include? true ? true : false
+            king_moves_out = safe.nil?
+
+            p "safe #{safe} king moves out #{king_moves_out}"
 
             if !king_moves_out
 
@@ -1035,7 +1039,7 @@ module Chess
                                     
                                     can_take = check_move_type([first, second], square, turn)
 
-                                    # p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
+                                    p "From get out of check #{can_take}, with this postion #{[[first, second]]} piece #{@board[[first, second]]}"
 
                                     if can_take
 
@@ -1089,9 +1093,17 @@ module Chess
 
                                     copy = @board.clone
 
+                                    p "This is copy in block check"
+
+                                    p copy
+
                                     piece = copy[[first, second]]
 
                                     copy[square] = piece
+
+                                    p "this is after with square replace"
+
+                                    p copy
 
                                     can_block = block_check(king, color, turn, copy)
 
@@ -1125,6 +1137,8 @@ module Chess
 
         def recheck(king, color, turn, board)
 
+            p board
+
             first = 0
 
             second = 0
@@ -1143,13 +1157,19 @@ module Chess
 
                     if board[[first, second]] != nil
 
+                        if first == 7 && second == 4
+
+                            p "#{board[[first, second]][0].match(color)} matches color? #{board[[7, 4]]} spot hard typed"
+
+                        end
+
                         if board[[first, second]][0].match(color)
 
-                            # p "This is inside recheck "
+                            p "This is inside recheck, color is #{color}"
 
                             legal = check_move_type([first, second], king, turn)
 
-                            # p "#{legal}, with this postion #{@board[[first, second]]}"
+                            p "#{legal}, with this postion #{@board[[first, second]]} first #{first} second #{second}"
 
                             if legal
 
@@ -1162,7 +1182,7 @@ module Chess
                         end
 
                     end
-
+                    
                     second += 1
 
                 end
@@ -1217,6 +1237,8 @@ module Chess
 
                 white_checks.each do |piece|
 
+                    # p "piece here #{piece}"
+
                     moves << check_move_type(piece, king, turn, true)
 
                 rescue nil
@@ -1263,7 +1285,17 @@ module Chess
 
                             # p "Get current piece moves"
 
+                            display_board
+
+                            p "this is eval blocks before current_piece_moves"
+
+                            p board
+
                             current_piece_moves = check_move_type([first, second], king, turn, true)
+
+                            p "this is after"
+
+                            p board
 
                             if current_piece_moves == false
 
@@ -1281,7 +1313,7 @@ module Chess
 
                                         p "scan == pieces_eval"
 
-                                        # p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
+                                        p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
 
                                         p "This is value of board square #{board[[first, second]][0]}"
 
@@ -1298,6 +1330,8 @@ module Chess
                                             color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
 
                                             new_setup = (recheck(king, opposite_color, turn, boardcopy))
+
+                                            p "this is new_setup #{new_setup}"
 
                                             if new_setup
 
