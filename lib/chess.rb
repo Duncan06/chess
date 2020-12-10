@@ -1255,13 +1255,13 @@ module Chess
 
             second = 0
 
-            blocking_square = nil
-
             while first < 8
 
                 p "This is first in eval #{first}"
 
                 while second < 8
+
+                    p "This is board[[first, second]] #{board[[first, second]]}, this is first #{first}, this is second #{second}, this is checking if !nil #{board[[first, second]] != nil}"
 
                     if board[[first, second]] != nil
 
@@ -1283,79 +1283,85 @@ module Chess
 
                             current_piece_moves.each do |block|
 
-                                p "This is current block #{block} and is #{board[block]}"
+                                p "This is current block #{block}"
 
-                                while scan <= pieces_eval
+                                p "This is the value of board block space #{board[[block]]}"
 
-                                    p "This is pieces_eval #{pieces_eval}"
+                                p board[[block]]
 
-                                    if scan == pieces_eval
+                                if board[[block]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
 
-                                        p "scan == pieces_eval"
+                                    boardcopy = board
 
-                                        p "This is value of board spot #{board[[blocking_square[0], blocking_square[1]]]} #{blocking_square[0]} #{blocking_square[1]}"
+                                    boardcopy[block] = board[[first, second]]
 
-                                        p "This is value of board square #{board[[first, second]]}"
+                                    boardcopy[[first, second]] = nil
 
-                                        if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
+                                    opposite_color = nil
 
-                                            boardcopy = board
+                                    color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
 
-                                            boardcopy[[blocking_square[0], blocking_square[1]]] = board[[first, second]]
+                                    # p boardcopy
 
-                                            boardcopy[[first, second]] = nil
+                                    # p "This is color #{color}, this is opposite_color #{opposite_color}, this is turn #{turn}"
 
-                                            opposite_color = nil
+                                    new_setup = (recheck(king, opposite_color, turn, boardcopy))
 
-                                            color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
+                                    p "this is new_setup #{new_setup}"
 
-                                            # p boardcopy
+                                    if new_setup
 
-                                            # p "This is color #{color}, this is opposite_color #{opposite_color}, this is turn #{turn}"
+                                        return true
 
-                                            new_setup = (recheck(king, opposite_color, turn, boardcopy))
+                                    end
 
-                                            p "this is new_setup #{new_setup}"
+                                end
 
-                                            if !new_setup
+                                possible_block = moves[scan].include? block rescue nil
 
-                                                return true
+                                if possible_block == nil
 
-                                            end
+                                    break
+
+                                end
+
+                                p "This is possible_block value #{possible_block}"
+
+                                if possible_block
+
+                                    blocking_square = block
+
+                                    if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
+
+                                        boardcopy = board
+
+                                        boardcopy[[blocking_square[0], blocking_square[1]]] = board[[first, second]]
+
+                                        boardcopy[[first, second]] = nil
+
+                                        opposite_color = nil
+
+                                        color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
+
+                                        # p boardcopy
+
+                                        # p "This is color #{color}, this is opposite_color #{opposite_color}, this is turn #{turn}"
+
+                                        new_setup = (recheck(king, opposite_color, turn, boardcopy))
+
+                                        p "this is new_setup #{new_setup}"
+
+                                        if !new_setup
+
+                                            return true
 
                                         end
-
-                                    end
-
-                                    possible_block = moves[scan].include? block rescue nil
-
-                                    if possible_block == nil
-
-                                        break
-
-                                    end
-
-                                    p "This is possible_block value #{possible_block}"
-
-                                    if possible_block
-
-                                        scan += 1
-
-                                        blocking_square = block
-
-                                        p "this is blocking square #{blocking_square}"
-
-                                    else
-
-                                        break
 
                                     end
 
                                 end
 
                             end
-                            
-                            scan = 0
 
                         end
 
