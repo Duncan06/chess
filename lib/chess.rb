@@ -102,7 +102,7 @@ module Chess
 
         def bishop_moves(start, last, turn, report=false, checking=false, board)
 
-            possible_moves = Bishop.get_moves(start, @board)
+            possible_moves = Bishop.get_moves(start, board)
 
             if report
 
@@ -1148,6 +1148,14 @@ module Chess
                         if board[[first, second]][0].match(color)
 
                             p "This is inside recheck, color is #{color}, this is king #{king}"
+
+                            if board[[3, 6]] == ["Black Queen", "\u265B"]
+
+                                p "This should be blocking with queen"
+
+                                p board
+
+                            end
 
                             legal = check_move_type([first, second], king, turn, false, true, board)
 
