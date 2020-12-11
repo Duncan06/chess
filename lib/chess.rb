@@ -1261,7 +1261,9 @@ module Chess
 
                 while second < 8
 
-                    p "This is board[[first, second]] #{board[[first, second]]}, this is first #{first}, this is second #{second}, this is checking if !nil #{board[[first, second]] != nil}"
+                    p "This is board[[first, second]] #{board[[first, second]]}, this is board[[first, second]][0] #{board.dig([first, second], 0)} this is first #{first}," +
+                    
+                   " this is second #{second}, this is checking if !nil #{board[[first, second]] != nil}"
 
                     if board[[first, second]] != nil
 
@@ -1289,7 +1291,7 @@ module Chess
 
                                 p board[[block]]
 
-                                if board[[block]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
+                                if board[[block]] == nil && board.dig([first, second], 0) != "White King" && board.dig([first, second], 0) != "Black King"
 
                                     boardcopy = board
 
@@ -1326,40 +1328,6 @@ module Chess
                                 end
 
                                 p "This is possible_block value #{possible_block}"
-
-                                if possible_block
-
-                                    blocking_square = block
-
-                                    if board[[blocking_square[0], blocking_square[1]]] == nil && board[[first, second]][0] != "White King" && board[[first, second]][0] != "Black King"
-
-                                        boardcopy = board
-
-                                        boardcopy[[blocking_square[0], blocking_square[1]]] = board[[first, second]]
-
-                                        boardcopy[[first, second]] = nil
-
-                                        opposite_color = nil
-
-                                        color == /White/ ? opposite_color = /Black/ : opposite_color = /White/
-
-                                        # p boardcopy
-
-                                        # p "This is color #{color}, this is opposite_color #{opposite_color}, this is turn #{turn}"
-
-                                        new_setup = (recheck(king, opposite_color, turn, boardcopy))
-
-                                        p "this is new_setup #{new_setup}"
-
-                                        if !new_setup
-
-                                            return true
-
-                                        end
-
-                                    end
-
-                                end
 
                             end
 
