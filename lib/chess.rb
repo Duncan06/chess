@@ -344,7 +344,7 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
-            if valid && turn % 2 == 0 && (@white_pawn_end.include? last)
+            if valid && turn % 2 == 0 && (@white_pawn_end.include? last) && @black_check == false
 
                 p "This is value of last #{last}"
 
@@ -362,9 +362,7 @@ module Chess
 
                 return "promotion"
 
-            elsif valid && turn % 2 == 1 && (@black_pawn_end.include? last)
-
-                # PAWN CAPTURE ERROR, b7 b5 while black check cause [2, 1] to capture [3,0]
+            elsif valid && turn % 2 == 1 && (@black_pawn_end.include? last) && @white_check == false
 
                 p "This is start #{start}, and this is value of last #{last}"
 
