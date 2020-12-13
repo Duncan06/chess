@@ -346,7 +346,7 @@ module Chess
 
             if valid && turn % 2 == 0 && (@white_pawn_end.include? last)
 
-                # p "This is value of last #{last}"
+                p "This is value of last #{last}"
 
                 if board[last] != nil
 
@@ -364,6 +364,10 @@ module Chess
 
             elsif valid && turn % 2 == 1 && (@black_pawn_end.include? last)
 
+                # PAWN CAPTURE ERROR, b7 b5 while black check cause [2, 1] to capture [3,0]
+
+                p "This is start #{start}, and this is value of last #{last}"
+
                 if board[last] != nil
 
                     p "#{board[last][1]} #{board[last][0]} captured by black"
@@ -375,6 +379,8 @@ module Chess
                 board[last] = piece
 
                 board[start] = nil
+
+                p board
 
                 return "promotion"
 
@@ -461,6 +467,8 @@ module Chess
         end
 
         def player_move(turn)
+
+            p "This is white check #{@white_check} and this is black check #{black_check}"
 
             if @white_check == true
 
@@ -686,6 +694,8 @@ module Chess
             else
 
                 puts "This piece cannot move there, or you have selected no piece, or the wrong color."
+
+                p 
 
                 player_move(turn)
 
@@ -1147,19 +1157,11 @@ module Chess
 
                         if board[[first, second]][0].match(color)
 
-                            p "This is inside recheck, color is #{color}, this is king #{king}"
-
-                            if board[[3, 6]] == ["Black Queen", "\u265B"]
-
-                                p "This should be blocking with queen"
-
-                                p board
-
-                            end
+                            # p "This is inside recheck, color is #{color}, this is king #{king}"
 
                             legal = check_move_type([first, second], king, turn, false, true, board)
 
-                            p "#{legal}, with this postion #{board[[first, second]]} first #{first} second #{second}"
+                            # p "#{legal}, with this postion #{board[[first, second]]} first #{first} second #{second}"
 
                             if legal
 
@@ -1253,7 +1255,7 @@ module Chess
 
             # p "Enter eval_blocks"
 
-            p "This is moves #{moves} from eval blocks, this is moves.length #{moves[0].length}"
+            # p "This is moves #{moves} from eval blocks, this is moves.length #{moves[0].length}"
 
             pieces_eval = moves[0].length
 
@@ -1265,13 +1267,13 @@ module Chess
 
             while first < 8
 
-                p "This is first in eval #{first}"
+                # p "This is first in eval #{first}"
 
                 while second < 8
 
-                    p "This is board[[first, second]] #{board[[first, second]]}, this is board[[first, second]][0] #{board.dig([first, second], 0)} this is first #{first}," +
+                    # p "This is board[[first, second]] #{board[[first, second]]}, this is board[[first, second]][0] #{board.dig([first, second], 0)} this is first #{first}," +
                     
-                   " this is second #{second}, this is checking if !nil #{board[[first, second]] != nil}"
+                #    " this is second #{second}, this is checking if !nil #{board[[first, second]] != nil}"
 
                     if board[[first, second]] != nil
 
@@ -1289,15 +1291,13 @@ module Chess
 
                             end
 
-                            p "This is current piece moves #{current_piece_moves}"
+                            # p "This is current piece moves #{current_piece_moves}"
 
                             current_piece_moves.each do |block|
 
-                                p "This is current block #{block}"
+                                # p "This is current block #{block}"
 
-                                p "This is the value of board block space #{board[[block]]}"
-
-                                p board[[block]]
+                                # p "This is the value of board block space #{board[[block]]}"
 
                                 if board[[block]] == nil && board.dig([first, second], 0) != "White King" && board.dig([first, second], 0) != "Black King"
 
@@ -1315,7 +1315,7 @@ module Chess
 
                                     new_setup = (recheck(king, opposite_color, turn, boardcopy))
 
-                                    p "this is new_setup #{new_setup}"
+                                    # p "this is new_setup #{new_setup}"
 
                                     if new_setup
 
@@ -1333,7 +1333,7 @@ module Chess
 
                                 end
 
-                                p "This is possible_block value #{possible_block}"
+                                # p "This is possible_block value #{possible_block}"
 
                             end
 
