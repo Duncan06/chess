@@ -348,6 +348,22 @@ module Chess
 
                 if board[last] != nil
 
+                    board_copy = @board.clone
+
+                    king_check = recheck(@black_king, /Black/, turn % 2, board_copy)
+
+                    if king_check && (@board[[last[0]+1, last[1]+1]] == ["Black King", "\u265A"] || @board[[last[0]-1, last[1]+1]] == ["Black King", "\u265A"])
+
+                        @black_check = true
+
+                        @white_checking_black << [start, last]
+
+                        return
+
+                    end
+
+                    p "Came here to declare capture"
+
                     puts "#{board[last][1]} #{board[last][0]} captured by white"
 
                 end
@@ -1181,8 +1197,6 @@ module Chess
         end
 
         def eval_blocks(king, color, turn, board, moves)
-
-            pieces_eval = moves[0].length
 
             scan = 0
 
