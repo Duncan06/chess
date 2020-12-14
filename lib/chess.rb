@@ -1032,8 +1032,6 @@ module Chess
 
                             legal = check_move_type([first, second], king, (turn % 2), false, true)
 
-                            # p "This is legal in check #{legal} this is piece #{@board[[first, second]]}, this is square #{first} #{second}"
-
                             if legal
 
                                 if color == /Black/ && @black_check == false
