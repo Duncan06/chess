@@ -24,7 +24,7 @@ class Pawn
 
             end
 
-            if y + 1 < 7
+            if y + 1 <= 7
 
                 if board[[x, y+1]].nil?
 
@@ -68,7 +68,7 @@ class Pawn
 
             end
 
-            if y - 1 > 0
+            if y - 1 >= 0
 
                 if board[[x, y-1]].nil?
 

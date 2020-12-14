@@ -562,7 +562,7 @@ module Chess
 
                     capture_piece?(start, last, turn)
 
-                    current = check(@white_king, /Black/, turn)
+                    current = check(@white_king, /Black/, turn+1)
 
                     if !current
 
@@ -941,6 +941,8 @@ module Chess
                         if @board[[first, second]][0].match(color)
 
                             legal = check_move_type([first, second], king, (turn % 2), false, true)
+
+                            # p "This is legal in check #{legal} this is piece #{@board[[first, second]]}, this is square #{first} #{second}"
 
                             if legal
 
