@@ -82,6 +82,10 @@ module Chess
 
             @piece_selection = ["queen", "rook", "bishop", "knight"]
 
+            @en_passe_white = []
+
+            @en_passe_black = []
+
         end
         
         def knight_moves(start, last, turn, report=false, checking=false, board)
@@ -344,6 +348,70 @@ module Chess
 
             valid = possible_moves.include?(last) ? true : false
 
+            if valid && turn % 2 == 0
+
+                if [start[0], start[1]+2] == last
+
+                    @en_passe_white << [start[0], start[1]+1]
+
+                    @en_passe_white << @board[start]
+
+                end
+
+            end
+
+            if valid && turn % 2 == 1
+
+                if [start[0], start[1]-2] == last
+
+                    @en_passe_black << [start[0], start[1]-1]
+
+                    @en_passe_black << @board[start]
+
+                end
+
+            end
+
+            if turn % 2 == 0
+
+                if last == @en_passe_black[0]
+
+                    puts "#{@en_passe_black[1][1]} #{@en_passe_black[1][0]} captured by white"
+
+                    piece = board[start]
+
+                    board[last] = piece
+
+                    board[start] = nil
+
+                    board[[last[0], last[1] - 1]] = nil
+
+                    return "en passe"
+
+                end
+
+            end
+
+            if turn % 2 == 1
+
+                if last == @en_passe_white[0]
+
+                    puts "#{@en_passe_white[1][1]} #{@en_passe_white[1][0]} captured by black"
+
+                    piece = board[start]
+
+                    board[last] = piece
+
+                    board[start] = nil
+
+                    board[[last[0], last[1] + 1]] = nil
+
+                    return "en passe"
+
+                end
+
+            end
+
             if valid && turn % 2 == 0 && (@white_pawn_end.include? last) && @black_check == false
 
                 if board[last] != nil
@@ -488,6 +556,22 @@ module Chess
 
         def player_move(turn)
 
+            if @en_passe_white != [] && turn % 2 == 0
+
+                @en_passe_white.shift
+
+                @en_passe_white.shift
+
+            end
+
+            if @en_passe_black != [] && turn % 2 == 1
+
+                @en_passe_black.shift
+
+                @en_passe_black.shift
+
+            end
+
             if @white_check == true
 
                 possible = get_out_of_check(@white_king, /White/, turn % 2, @black_checking_white)
@@ -549,6 +633,12 @@ module Chess
             if legal == "promotion"
 
                 pawn_promotion(last, turn)
+
+                return
+
+            end
+
+            if legal == "en passe"
 
                 return
 
