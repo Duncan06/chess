@@ -26,7 +26,11 @@ class Pawn
 
             if y + 1 < 7
 
-                possible_moves << [x, y+1]
+                if board[[x, y+1]].nil?
+
+                    possible_moves << [x, y+1]
+
+                end
 
             end
 
@@ -66,7 +70,11 @@ class Pawn
 
             if y - 1 > 0
 
-                possible_moves << [x, y-1]
+                if board[[x, y-1]].nil?
+
+                    possible_moves << [x, y-1]
+
+                end
 
             end
 

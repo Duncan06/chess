@@ -352,7 +352,7 @@ module Chess
 
                     king_check = recheck(@black_king, /Black/, turn % 2, board_copy)
 
-                    if king_check && (@board[[last[0]+1, last[1]+1]] == ["Black King", "\u265A"] || @board[[last[0]-1, last[1]+1]] == ["Black King", "\u265A"])
+                    if king_check && (@board[last] == ["Black King", "\u265A"] || @board[last] == ["Black King", "\u265A"])
 
                         @black_check = true
 
@@ -361,8 +361,6 @@ module Chess
                         return
 
                     end
-
-                    p "Came here to declare capture"
 
                     puts "#{board[last][1]} #{board[last][0]} captured by white"
 
@@ -379,6 +377,20 @@ module Chess
             elsif valid && turn % 2 == 1 && (@black_pawn_end.include? last) && @white_check == false
 
                 if board[last] != nil
+
+                    board_copy = @board.clone
+
+                    king_check = recheck(@white_king, /White/, turn % 2, board_copy)
+
+                    if king_check && (@board[last] == ["White King", "\u2654"] || @board[last] == ["White King", "\u2654"])
+
+                        @white_check = true
+
+                        @black_checking_white << [start, last]
+
+                        return
+
+                    end
 
                     puts "#{board[last][1]} #{board[last][0]} captured by black"
 
